@@ -128,16 +128,19 @@
             display: flex;
             flex-direction: column;
             padding-top: 70px; /* 为固定导航栏预留空间 */
+            height: 100vh; /* 限制高度，避免超出屏幕 */
+            overflow: hidden; /* 避免内容溢出 */
         }
         
         .welcome-top {
-            height: 66vh;
+            height: 60vh; /* 减少高度，之前是66vh */
             width: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 3rem;
             position: relative;
+            z-index: 2; /* 确保内容显示在上层 */
         }
         
         .welcome-content {
@@ -156,34 +159,69 @@
         }
         
         .welcome-gallery {
-            height: 34vh;
+            height: 40vh; /* 调整高度以匹配总高度为100vh */
             width: 100%;
             position: relative;
-            overflow: hidden;
+            overflow: visible; /* 修改为visible以允许内容溢出不被裁剪 */
             background-color: rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 1;
+            padding-top: 30px; /* 添加顶部内边距，为放大的图片提供更多空间 */
+        }
+        
+        /* 添加伪元素实现平滑过渡 */
+        .welcome-gallery::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            background: linear-gradient(to bottom, rgba(73, 97, 220, 0), rgba(0, 0, 0, 0.2));
+            z-index: 3;
+            pointer-events: none; /* 确保伪元素不会阻止鼠标事件 */
         }
         
         .gallery-container {
             display: flex;
             position: absolute;
-            height: 100%;
+            height: calc(100% - 30px); /* 减去顶部内边距的高度 */
             animation: slideGallery 25s linear infinite;
+            padding: 10px 0; /* 添加内边距使元素有空间放大而不被遮挡 */
         }
         
         .gallery-item {
             min-width: 300px;
-            height: 100%;
+            height: calc(100% - 20px); /* 调整高度，为放大腾出空间 */
             margin: 0 10px;
             background-color: #fff;
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            position: relative; /* 添加定位 */
+            z-index: 1; /* 默认z-index */
+            transform-origin: center center; /* 确保从中心放大 */
+        }
+        
+        /* 添加图廊项的悬停效果 */
+        .gallery-item:hover {
+            transform: scale(1.1);
+            z-index: 10; /* 提高z-index使其显示在顶层 */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
         }
         
         .gallery-img {
             width: 100%;
             height: 80%;
             object-fit: cover;
+            transition: all 0.5s ease;
+        }
+        
+        .gallery-item:hover .gallery-img {
+            transform: scale(1.05);
         }
         
         .gallery-caption {
@@ -273,26 +311,27 @@
             margin-top: 0.5rem;
         }
         
-        /* 课程内容区域样式 */
+        /* 课程内容区域样式 - 恢复左右结构但优化设计 */
         .course-container {
             display: flex;
             width: 100%;
             max-width: 1200px;
             margin: 2rem auto;
-            gap: 3rem;
+            gap: 2rem;
         }
         
         .course-slider {
-            flex: 2;
+            flex: 3; /* 增加比例 */
             position: relative;
             overflow: hidden;
-            height: 550px;
+            height: 500px;
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            background: linear-gradient(135deg, #f5f7ff, #e8eeff);
         }
         
         .course-action {
-            flex: 1;
+            flex: 2; /* 增加比例 */
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -302,6 +341,33 @@
             background: rgba(73, 97, 220, 0.05);
             border-radius: 15px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .course-more {
+            font-size: 1.7rem;
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+        
+        .course-action p {
+            font-size: 1.15rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            color: #555;
+            max-width: 90%;
+        }
+        
+        .btn-course-details {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: #4961DC;
+            color: white;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(73, 97, 220, 0.3);
+            transition: all 0.3s;
+            margin-top: 1rem;
         }
         
         .course-card {
@@ -317,6 +383,7 @@
             justify-content: flex-end;
             padding: 3rem;
             color: white;
+            overflow: hidden; /* 防止内容溢出 */
         }
         
         .course-card.active {
@@ -337,20 +404,52 @@
         .course-content {
             position: relative;
             z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            max-width: 90%;
         }
         
         .course-title {
-            font-size: 2.8rem;
+            font-size: 2.5rem;
             margin-bottom: 1.5rem;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+        
+        .course-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 80px;
+            height: 3px;
+            background: #fff;
         }
         
         .course-description {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             line-height: 1.8;
             margin-bottom: 1.5rem;
             text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
-            max-width: 90%;
+        }
+        
+        .course-button {
+            padding: 0.8rem 1.5rem;
+            background: white;
+            color: #4961DC;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .course-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
         }
         
         .slider-nav {
@@ -377,32 +476,42 @@
             transform: scale(1.2);
         }
         
-        .course-more {
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-            color: #333;
-        }
-        
-        .btn-course-details {
+        .section-title {
+            position: relative;
             display: inline-block;
-            padding: 1.2rem 2.5rem;
+            margin-bottom: 2.5rem;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
             background: #4961DC;
+        }
+        
+        footer {
+            background-color: #333;
             color: white;
-            font-size: 1.3rem;
-            border-radius: 50px;
-            text-decoration: none;
-            box-shadow: 0 5px 15px rgba(73, 97, 220, 0.3);
-            transition: all 0.3s;
-            margin-top: 1.5rem;
+            text-align: center;
+            padding: 2rem;
         }
         
-        .btn-course-details:hover {
-            background: #3F51B5;
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(73, 97, 220, 0.4);
+        .section-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1s ease, transform 1s ease;
         }
         
-        /* 视频列表样式 */
+        .section-reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* 视频列表样式 - 恢复之前删除的样式 */
         .video-list {
             width: 100%;
             max-width: 900px;
@@ -495,41 +604,6 @@
             background-color: #3F51B5;
         }
         
-        .section-title {
-            position: relative;
-            display: inline-block;
-            margin-bottom: 2.5rem;
-        }
-        
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 3px;
-            background: #4961DC;
-        }
-        
-        footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 2rem;
-        }
-        
-        .section-reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 1s ease, transform 1s ease;
-        }
-        
-        .section-reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
         @media (max-width: 768px) {
             .navbar {
                 padding: 0 5%;
@@ -541,17 +615,19 @@
                 height: 100vh;
                 width: 100%;
                 top: 70px;
-                left: -100%;
+                left: auto;
+                right: -100%;
                 flex-direction: column;
                 align-items: center;
                 justify-content: flex-start;
                 padding-top: 2rem;
                 transition: all 0.5s ease;
-                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                box-shadow: -5px 0 10px rgba(0, 0, 0, 0.1);
             }
             
             .nav-links.active {
-                left: 0;
+                left: auto;
+                right: 0;
             }
             
             .nav-links li {
@@ -572,7 +648,6 @@
             
             .course-container {
                 flex-direction: column;
-                gap: 2rem;
             }
             
             .course-slider {
@@ -705,7 +780,7 @@
         </div>
     </section>
 
-    <!-- 图文介绍栏目 - 左右结构 -->
+    <!-- 图文介绍栏目 - 修改回左右结构但优化设计 -->
     <section id="articles" class="section-reveal">
         <h2 class="section-title">精彩课程内容</h2>
         <p>浏览我们精心准备的课程内容，轻松学习AI知识</p>
@@ -718,6 +793,7 @@
                     <div class="course-content">
                         <h3 class="course-title">AI基础与应用</h3>
                         <p class="course-description">了解人工智能的基本概念、发展历程及日常应用场景。本单元将以通俗易懂的方式解释AI技术，帮助老年人消除对新技术的恐惧感，认识AI如何改善生活质量。</p>
+                        <button class="course-button">查看详情</button>
                     </div>
                 </div>
                 
@@ -726,6 +802,16 @@
                     <div class="course-content">
                         <h3 class="course-title">智能设备使用</h3>
                         <p class="course-description">掌握智能手机和智能家居设备的基本操作方法。从语音助手、拍照识别到健康监测应用，本单元将通过实践演示，帮助老年人熟练使用现代智能设备，享受科技便利。</p>
+                        <button class="course-button">查看详情</button>
+                    </div>
+                </div>
+                
+                <!-- 第三个单元卡片 -->
+                <div class="course-card" style="background-image: url('https://via.placeholder.com/800x450?text=在线服务指南');">
+                    <div class="course-content">
+                        <h3 class="course-title">在线服务指南</h3>
+                        <p class="course-description">学习使用常见的在线服务，如视频通话、网上购物、在线挂号等。本单元将手把手教您如何安全、便捷地使用各类网络服务，轻松融入数字生活。</p>
+                        <button class="course-button">查看详情</button>
                     </div>
                 </div>
                 
@@ -733,14 +819,15 @@
                 <div class="slider-nav">
                     <span class="slider-dot active" data-index="0"></span>
                     <span class="slider-dot" data-index="1"></span>
+                    <span class="slider-dot" data-index="2"></span>
                 </div>
             </div>
             
             <!-- 右侧操作区域 -->
             <div class="course-action">
                 <h3 class="course-more">想了解更多课程详情？</h3>
-                <p>点击下方按钮，查看完整的课程介绍和学习资料</p>
-                <a href="course-details.html" class="btn-course-details">查看详细课程</a>
+                <p>我们提供丰富多样的课程内容，满足不同老年人的学习需求。无论您是初次接触智能设备，还是希望进一步提升技能，都能在这里找到适合的学习资源。</p>
+                <a href="course-details.html" class="btn-course-details">查看全部课程</a>
             </div>
         </div>
     </section>
@@ -804,6 +891,28 @@
             const navbar = document.querySelector('.navbar');
             const hamburger = document.querySelector('.hamburger');
             const navLinksContainer = document.querySelector('.nav-links');
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            
+            // 给图廊项添加鼠标移动倾斜效果
+            galleryItems.forEach(item => {
+                item.addEventListener('mousemove', function(e) {
+                    const rect = this.getBoundingClientRect();
+                    const x = e.clientX - rect.left; // 鼠标在元素内的X位置
+                    const y = e.clientY - rect.top;  // 鼠标在元素内的Y位置
+                    
+                    // 计算倾斜角度，最大为5度
+                    const tiltX = (y / rect.height * 10 - 5).toFixed(2);
+                    const tiltY = ((x / rect.width * 10 - 5) * -1).toFixed(2);
+                    
+                    // 应用transform
+                    this.style.transform = `scale(1.1) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+                });
+                
+                // 鼠标离开时恢复原状
+                item.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1) rotateX(0) rotateY(0)';
+                });
+            });
             
             // 导航链接点击事件
             navLinks.forEach(link => {
@@ -922,6 +1031,13 @@
                     currentCard = (currentCard + 1) % courseCards.length;
                     showCard(currentCard);
                 }, 6000);
+            });
+            
+            // 课程卡片按钮点击事件
+            document.querySelectorAll('.course-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    window.location.href = 'course-details.html';
+                });
             });
             
             // 调整窗口大小时
