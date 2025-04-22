@@ -286,7 +286,7 @@ h1 {
         transform: translateX(0);
     }
     100% {
-        transform: translateX(-100%);
+        transform: translateX(-50%);
     }
 }
 
@@ -428,11 +428,15 @@ h1 {
 }
 
 .course-card {
+    z-index: 0;
+    top: 0;
+    left: 0;
+    transform: translateX(50px);
+    transition: opacity var(--transition-slow), transform var(--transition-slow);
     position: absolute;
     width: 100%;
     height: 100%;
     opacity: 0;
-    transition: all var(--transition-slow);
     background-size: cover;
     background-position: center;
     display: flex;
@@ -441,24 +445,12 @@ h1 {
     padding: 3rem;
     color: white;
     overflow: hidden;
-    visibility: hidden;
 }
 
 .course-card.active {
+    z-index: 1;
     opacity: 1;
-    visibility: visible;
-    animation: cardAppear 1s forwards;
-}
-
-@keyframes cardAppear {
-    from {
-        transform: translateX(50px);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
+    transform: translateX(0);
 }
 
 .course-card::before {
@@ -534,7 +526,7 @@ h1 {
 }
 
 .course-button:hover {
-    color: white;
+    color: #ffffff; /* 保持文字在背景上可见 */
     transform: translateY(-3px);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
@@ -642,6 +634,7 @@ h1 {
 }
 
 .btn-course-details:hover {
+    color: #ffffff; /* 保持文字在背景上可见 */
     transform: translateY(-5px);
     box-shadow: 0 8px 25px rgba(73, 97, 220, 0.4);
 }
@@ -774,6 +767,7 @@ h1 {
 }
 
 .video-btn:hover {
+    color: #ffffff; /* 保持文字在背景上可见 */
     background-color: var(--primary-dark);
     transform: translateY(-3px);
 }
@@ -1570,4 +1564,156 @@ body.high-contrast .video-play-icon i {
 
 /* 修复全屏查看器高对比度样式 */
 body.high-contrast .fullscreen-viewer {
-    background-color: rgba(7, 21,
+    background-color: rgba(7, 21, 37, 0.95);
+}
+
+body.high-contrast .viewer-content img {
+    border: 3px solid #4a90e2;
+}
+
+body.high-contrast .close-viewer {
+    background-color: #1a365d;
+    color: #fff;
+    border: 1px solid #4a90e2;
+}
+
+/* 辅助功能工具栏高对比度样式 */
+body.high-contrast .access-toggle,
+body.high-contrast .back-to-top {
+    background-color: #1a365d;
+    border: 1px solid #4a90e2;
+}
+
+body.high-contrast .access-options {
+    background: #10243d;
+    border: 1px solid #4a90e2;
+}
+
+body.high-contrast .access-options button {
+    background: #0a1a2f;
+    color: #f0f0f0;
+    border: 1px solid #4a90e2;
+}
+
+body.high-contrast .access-options button:hover {
+    background: #1a365d;
+}
+
+body.high-contrast .access-options button i {
+    color: #4a90e2;
+}
+
+/* ================= 统计数字区域 ================= */
+.stats-section {
+    padding: 60px 20px;
+    background: linear-gradient(135deg, var(--bg-light), var(--bg-medium));
+    border-top: 1px solid rgba(0,0,0,0.05);
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.stats-container {
+    display: flex;
+    justify-content: space-around;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+}
+
+.stat-item {
+    text-align: center;
+    padding: 20px;
+    flex: 1;
+    min-width: 200px;
+    margin: 10px;
+    background: white;
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-medium);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stat-item:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-dark);
+}
+
+.stat-item i {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+.stat-count {
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--primary-dark);
+    line-height: 1.2;
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    font-size: 1.1rem;
+    color: var(--text-medium);
+}
+
+/* 移动设备适配 */
+@media (max-width: 768px) {
+    .stat-item {
+        min-width: 140px;
+        padding: 15px;
+    }
+    
+    .stat-count {
+        font-size: 2.2rem;
+    }
+    
+    .stat-item i {
+        font-size: 2rem;
+    }
+    
+    .back-to-top,
+    .access-toggle {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+    
+    .back-to-top {
+        bottom: 20px;
+        right: 20px;
+    }
+    
+    .accessibility-bar {
+        bottom: 20px;
+        left: 20px;
+    }
+    
+    .close-viewer {
+        top: -20px;
+        right: -20px;
+        width: 30px;
+        height: 30px;
+    }
+}
+
+/* 课程卡片滑动动画 */
+.slide-out {
+    animation: slideOutLeft 0.3s forwards;
+}
+
+@keyframes slideOutLeft {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(-30px);
+        opacity: 0;
+    }
+}
+
+/* 触摸反馈效果 */
+.touched {
+    transform: scale(0.98);
+    box-shadow: var(--shadow-light);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+} 
