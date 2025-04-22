@@ -1451,147 +1451,123 @@ footer {
     cursor: not-allowed;
 }
 
-/* 高对比度模式 */
+/* 高对比度模式 - 优化配色方案 */
 body.high-contrast {
-    background-color: #000;
-    color: #fff;
+    background-color: #0a1a2f; /* 深蓝色背景替代纯黑 */
+    color: #f0f0f0; /* 柔和的白色 */
 }
 
-body.high-contrast .navbar,
+body.high-contrast .navbar {
+    background-color: #0a1a2f;
+    color: #f0f0f0;
+    border-bottom: 1px solid #4a90e2;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+
 body.high-contrast .course-action,
 body.high-contrast .video-item {
-    background-color: #000;
-    color: #fff;
-    border: 1px solid #fff;
+    background-color: #10243d; /* 稍微浅一点的蓝色 */
+    color: #f0f0f0;
+    border: 1px solid #4a90e2;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 body.high-contrast a,
-body.high-contrast .nav-links a,
+body.high-contrast .nav-links a {
+    color: #4a90e2; /* 明亮的蓝色 */
+}
+
 body.high-contrast h1,
 body.high-contrast h2,
 body.high-contrast h3 {
-    color: #ffff00;
+    color: #ffd166; /* 温暖的金色 */
 }
 
 body.high-contrast .btn-course-details,
 body.high-contrast .course-button,
 body.high-contrast .video-btn {
-    background-color: #000;
+    background-color: #1a365d; /* 深蓝色按钮 */
+    color: #ffffff;
+    border: 2px solid #4a90e2;
+}
+
+body.high-contrast .btn-course-details:hover,
+body.high-contrast .course-button:hover,
+body.high-contrast .video-btn:hover {
+    background-color: #2c4f82; /* 悬停时稍微变亮 */
+    transform: translateY(-3px);
+}
+
+/* 欢迎页高对比度样式 */
+body.high-contrast #welcome {
+    background: linear-gradient(135deg, #0f2847, #0a1a2f); /* 渐变背景更有深度 */
+    color: #f0f0f0;
+    border-bottom: 1px solid #4a90e2;
+}
+
+body.high-contrast #welcome .welcome-gallery {
+    background-color: #0f2847;
+    border-top: 1px solid rgba(74, 144, 226, 0.3);
+}
+
+body.high-contrast #welcome .gallery-item {
+    background-color: #10243d;
+    border: 1px solid #4a90e2;
+}
+
+body.high-contrast #welcome .gallery-caption {
+    color: #ffd166;
+}
+
+body.high-contrast .welcome-subtitle {
+    color: #e0e0e0;
+}
+
+body.high-contrast .scroll-down {
+    background-color: #1a365d;
     color: #fff;
-    border: 2px solid #fff;
+    border: 1px solid #4a90e2;
 }
 
-/* ================= 统计数字区域 ================= */
-.stats-section {
-    padding: 60px 20px;
-    background: linear-gradient(135deg, var(--bg-light), var(--bg-medium));
-    border-top: 1px solid rgba(0,0,0,0.05);
-    border-bottom: 1px solid rgba(0,0,0,0.05);
+body.high-contrast .section-title {
+    color: #ffd166;
 }
 
-.stats-container {
-    display: flex;
-    justify-content: space-around;
-    max-width: 1200px;
-    margin: 0 auto;
-    flex-wrap: wrap;
+body.high-contrast .section-title::after {
+    background: #4a90e2;
 }
 
-.stat-item {
-    text-align: center;
-    padding: 20px;
-    flex: 1;
-    min-width: 200px;
-    margin: 10px;
-    background: white;
-    border-radius: var(--border-radius-md);
-    box-shadow: var(--shadow-medium);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+body.high-contrast footer {
+    background-color: #071525;
+    border-top: 1px solid #4a90e2;
 }
 
-.stat-item:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-dark);
+/* 课程卡片高对比度样式 */
+body.high-contrast .course-card::before {
+    background: linear-gradient(to top, rgba(7, 21, 37, 0.9), rgba(7, 21, 37, 0.5));
 }
 
-.stat-item i {
-    font-size: 2.5rem;
-    color: var(--primary-color);
-    margin-bottom: 15px;
+body.high-contrast .course-slider {
+    background: linear-gradient(135deg, #0f2847, #0a1a2f);
 }
 
-.stat-count {
-    font-size: 3rem;
-    font-weight: bold;
-    color: var(--primary-dark);
-    line-height: 1.2;
-    margin-bottom: 5px;
+body.high-contrast .course-title::after {
+    background: #4a90e2;
 }
 
-.stat-label {
-    font-size: 1.1rem;
-    color: var(--text-medium);
+/* 视频区域高对比度样式 */
+body.high-contrast .video-thumbnail::before {
+    background: rgba(10, 26, 47, 0.5);
 }
 
-/* 移动设备适配 */
-@media (max-width: 768px) {
-    .stat-item {
-        min-width: 140px;
-        padding: 15px;
-    }
-    
-    .stat-count {
-        font-size: 2.2rem;
-    }
-    
-    .stat-item i {
-        font-size: 2rem;
-    }
-    
-    .back-to-top,
-    .access-toggle {
-        width: 40px;
-        height: 40px;
-        font-size: 1rem;
-    }
-    
-    .back-to-top {
-        bottom: 20px;
-        right: 20px;
-    }
-    
-    .accessibility-bar {
-        bottom: 20px;
-        left: 20px;
-    }
-    
-    .close-viewer {
-        top: -20px;
-        right: -20px;
-        width: 30px;
-        height: 30px;
-    }
+body.high-contrast .video-play-icon {
+    background: rgba(255, 255, 255, 0.9);
 }
 
-/* 课程卡片滑动动画 */
-.slide-out {
-    animation: slideOutLeft 0.3s forwards;
+body.high-contrast .video-play-icon i {
+    color: #0a1a2f;
 }
 
-@keyframes slideOutLeft {
-    from {
-        transform: translateX(0);
-        opacity: 1;
-    }
-    to {
-        transform: translateX(-30px);
-        opacity: 0;
-    }
-}
-
-/* 触摸反馈效果 */
-.touched {
-    transform: scale(0.98);
-    box-shadow: var(--shadow-light);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-} 
+/* 修复全屏查看器高对比度样式 */
+body.high-contrast .fullscreen-viewer {
+    background-color: rgba(7, 21,
