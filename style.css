@@ -1268,4 +1268,330 @@ footer {
     transform: translateZ(0);
     backface-visibility: hidden;
     perspective: 1000px;
+}
+
+/* ================= 全屏图片查看器 ================= */
+.fullscreen-viewer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.fullscreen-viewer.active {
+    opacity: 1;
+}
+
+.viewer-content {
+    max-width: 90%;
+    max-height: 90%;
+    position: relative;
+    text-align: center;
+}
+
+.viewer-content img {
+    max-width: 100%;
+    max-height: 80vh;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    border: 5px solid white;
+}
+
+.viewer-content p {
+    color: white;
+    margin-top: 20px;
+    font-size: 1.2rem;
+}
+
+.close-viewer {
+    position: absolute;
+    top: -30px;
+    right: -30px;
+    background: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    color: #333;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+}
+
+.close-viewer:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+/* 图片光影效果 */
+.glare {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* ================= 回到顶部按钮 ================= */
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    z-index: 99;
+}
+
+.back-to-top.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.back-to-top:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
+
+/* ================= 辅助功能工具栏 ================= */
+.accessibility-bar {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    z-index: 990;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.access-toggle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    z-index: 991;
+    transition: all 0.3s ease;
+}
+
+.access-toggle:hover {
+    background-color: var(--primary-dark);
+    transform: scale(1.1);
+}
+
+.access-options {
+    display: none;
+    opacity: 0;
+    flex-direction: column;
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    margin-top: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: opacity 0.3s ease;
+}
+
+.access-options button {
+    margin: 5px 0;
+    padding: 10px 15px;
+    border: none;
+    background: var(--bg-light);
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    color: var(--text-dark);
+    transition: all 0.2s ease;
+}
+
+.access-options button i {
+    margin-right: 10px;
+    color: var(--primary-color);
+}
+
+.access-options button:hover {
+    background: var(--bg-medium);
+}
+
+.access-options button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* 高对比度模式 */
+body.high-contrast {
+    background-color: #000;
+    color: #fff;
+}
+
+body.high-contrast .navbar,
+body.high-contrast .course-action,
+body.high-contrast .video-item {
+    background-color: #000;
+    color: #fff;
+    border: 1px solid #fff;
+}
+
+body.high-contrast a,
+body.high-contrast .nav-links a,
+body.high-contrast h1,
+body.high-contrast h2,
+body.high-contrast h3 {
+    color: #ffff00;
+}
+
+body.high-contrast .btn-course-details,
+body.high-contrast .course-button,
+body.high-contrast .video-btn {
+    background-color: #000;
+    color: #fff;
+    border: 2px solid #fff;
+}
+
+/* ================= 统计数字区域 ================= */
+.stats-section {
+    padding: 60px 20px;
+    background: linear-gradient(135deg, var(--bg-light), var(--bg-medium));
+    border-top: 1px solid rgba(0,0,0,0.05);
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.stats-container {
+    display: flex;
+    justify-content: space-around;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+}
+
+.stat-item {
+    text-align: center;
+    padding: 20px;
+    flex: 1;
+    min-width: 200px;
+    margin: 10px;
+    background: white;
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-medium);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stat-item:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-dark);
+}
+
+.stat-item i {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+.stat-count {
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--primary-dark);
+    line-height: 1.2;
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    font-size: 1.1rem;
+    color: var(--text-medium);
+}
+
+/* 移动设备适配 */
+@media (max-width: 768px) {
+    .stat-item {
+        min-width: 140px;
+        padding: 15px;
+    }
+    
+    .stat-count {
+        font-size: 2.2rem;
+    }
+    
+    .stat-item i {
+        font-size: 2rem;
+    }
+    
+    .back-to-top,
+    .access-toggle {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+    
+    .back-to-top {
+        bottom: 20px;
+        right: 20px;
+    }
+    
+    .accessibility-bar {
+        bottom: 20px;
+        left: 20px;
+    }
+    
+    .close-viewer {
+        top: -20px;
+        right: -20px;
+        width: 30px;
+        height: 30px;
+    }
+}
+
+/* 课程卡片滑动动画 */
+.slide-out {
+    animation: slideOutLeft 0.3s forwards;
+}
+
+@keyframes slideOutLeft {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(-30px);
+        opacity: 0;
+    }
+}
+
+/* 触摸反馈效果 */
+.touched {
+    transform: scale(0.98);
+    box-shadow: var(--shadow-light);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 } 
