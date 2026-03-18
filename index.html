@@ -1,223 +1,1655 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI公益课堂 - 关爱老年人</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="AI在身边 - 社区智慧生活讲座结题报告">
+<title>AI在身边 · 社区智慧生活讲座结题报告</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;500;600;700&family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
+<style>
+:root {
+  --crimson: #A21C26;
+  --crimson-soft: rgba(162,28,38,0.65);
+  --gold: #FAC189;
+  --gold-light: #FDF0DC;
+  --sakura: #F8D7E8;
+  --sakura-deep: #E8A0B5;
+  --green: #A8C8B0;
+  --green-deep: #7BA688;
+  --cream: #FDF6EE;
+  --cream-warm: #FAF0E4;
+  --kraft: #E8D5C4;
+  --ink: #2C1810;
+  --pencil: #4A3828;
+  --pencil-light: #7B6B5B;
+  --rule-blue: rgba(120,160,200,0.18);
+  --rule-red: rgba(162,28,38,0.12);
+  --shadow-paper: 2px 3px 8px rgba(44,24,16,0.10), 0 1px 3px rgba(44,24,16,0.06);
+  --shadow-lift: 3px 6px 20px rgba(44,24,16,0.14), 0 2px 6px rgba(44,24,16,0.08);
+  --shadow-sticky: 2px 4px 10px rgba(44,24,16,0.13), -1px 1px 3px rgba(44,24,16,0.05);
+  --font-serif: 'Noto Serif SC', 'Georgia', serif;
+  --font-sans: 'Noto Sans SC', 'Helvetica Neue', sans-serif;
+  --font-hand: 'Caveat', 'ZCOOL KuaiLe', cursive;
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; font-size: 17px; }
+body {
+  font-family: var(--font-sans);
+  color: var(--ink);
+  background: #E8DDD0;
+  line-height: 1.85;
+  overflow-x: hidden;
+}
+img { max-width: 100%; display: block; }
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+button { border: none; background: none; cursor: pointer; font-family: inherit; }
+/* ===== PETALS ===== */
+.petals-container { position: fixed; inset: 0; pointer-events: none; z-index: 99999; overflow: hidden; }
+.petal {
+  position: absolute; top: -30px; display: block;
+  width: 14px; height: 17px;
+  background: var(--sakura);
+  border-radius: 80% 0 55% 50% / 55% 0 80% 50%;
+  opacity: 0; animation: petalDrift linear infinite;
+}
+.petal:nth-child(1){left:5%;width:11px;height:14px;animation-duration:16s;animation-delay:0s}
+.petal:nth-child(2){left:18%;width:15px;height:18px;animation-duration:20s;animation-delay:4s}
+.petal:nth-child(3){left:38%;width:10px;height:13px;animation-duration:14s;animation-delay:8s}
+.petal:nth-child(4){left:55%;width:14px;height:17px;animation-duration:18s;animation-delay:2s}
+.petal:nth-child(5){left:72%;width:12px;height:15px;animation-duration:22s;animation-delay:6s}
+.petal:nth-child(6){left:88%;width:9px;height:12px;animation-duration:17s;animation-delay:11s}
+.petal:nth-child(7){left:30%;width:13px;height:16px;animation-duration:19s;animation-delay:9s}
+.petal:nth-child(8){left:65%;width:11px;height:13px;animation-duration:15s;animation-delay:13s}
+.petal:nth-child(9){left:48%;width:16px;height:19px;animation-duration:21s;animation-delay:1s}
+.petal:nth-child(10){left:82%;width:10px;height:12px;animation-duration:16s;animation-delay:7s}
+@keyframes petalDrift {
+  0%{transform:translateY(-30px) translateX(0) rotate(0deg);opacity:0}
+  6%{opacity:0.5}
+  25%{transform:translateY(25vh) translateX(35px) rotate(80deg)}
+  50%{transform:translateY(50vh) translateX(-25px) rotate(190deg);opacity:0.35}
+  75%{transform:translateY(75vh) translateX(45px) rotate(290deg)}
+  100%{transform:translateY(108vh) translateX(15px) rotate(400deg);opacity:0}
+}
+/* ===== SCROLL THREAD ===== */
+.scroll-thread { position: fixed; top: 0; left: 0; height: 3px; width: 0%; background: var(--crimson); z-index: 100001; transition: width .08s linear; }
+/* ===== SIDE BOOKMARK NAV ===== */
+.side-nav {
+  position: fixed;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 100000;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  transition: opacity .4s ease;
+}
+.side-nav.hidden-nav { opacity: 0; pointer-events: none; }
+.side-nav a {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 10px 14px 10px 20px;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: white;
+  border-radius: 6px 0 0 6px;
+  transform: translateX(calc(100% - 42px));
+  transition: transform .35s cubic-bezier(.25,.46,.45,.94), box-shadow .3s;
+  white-space: nowrap;
+  position: relative;
+  min-width: 110px;
+  box-shadow: -2px 2px 8px rgba(44,24,16,0.12);
+}
+.side-nav a:hover,
+.side-nav a.active {
+  transform: translateX(0);
+  box-shadow: -3px 3px 14px rgba(44,24,16,0.2);
+}
+.side-nav a .bookmark-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.7);
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  flex-shrink: 0;
+}
+.side-nav a.active .bookmark-dot {
+  background: white;
+  box-shadow: 0 0 6px rgba(255,255,255,0.5);
+}
+/* Bookmark colors — matching site palette */
+.side-nav a:nth-child(1) { background: var(--crimson); }
+.side-nav a:nth-child(2) { background: #B8764E; }
+.side-nav a:nth-child(3) { background: var(--green-deep); }
+.side-nav a:nth-child(4) { background: #C47A8A; }
+.side-nav a:nth-child(5) { background: #8B7355; }
+/* Small notch at bottom of each bookmark for 'tab' feel */
+.side-nav a::after {
+  content: '';
+  position: absolute;
+  bottom: -3px; left: 6px; right: 6px;
+  height: 3px;
+  background: inherit;
+  border-radius: 0 0 4px 4px;
+  opacity: 0;
+}
+/* Mobile hamburger (hidden on desktop) */
+.hamburger {
+  display: none;
+  position: fixed;
+  top: 14px; right: 14px;
+  z-index: 100002;
+  flex-direction: column;
+  gap: 5px;
+  padding: 10px;
+  background: rgba(253,246,238,0.92);
+  backdrop-filter: blur(8px);
+  border-radius: 8px;
+  box-shadow: var(--shadow-paper);
+}
+.hamburger span {
+  display: block; width: 22px; height: 1.5px;
+  background: var(--ink); transition: all .3s; transform-origin: center;
+}
+.hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(4px,4px); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
+.mobile-menu {
+  position: fixed; inset: 0; z-index: 99999;
+  background: var(--cream);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem;
+  opacity: 0; pointer-events: none; transition: opacity .3s;
+  background-image: repeating-linear-gradient(transparent,transparent 31px,var(--rule-blue) 31px,var(--rule-blue) 32px);
+}
+.mobile-menu.open { opacity: 1; pointer-events: auto; }
+.mobile-menu a { font-family: var(--font-hand); font-size: 2rem; color: var(--ink); }
+.mobile-menu a:hover { color: var(--crimson); }
+/* ===== HERO — FIXED, slides under content ===== */
+.hero {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  padding: clamp(4rem,8vh,6rem) clamp(1.5rem,4vw,4rem);
+  overflow: hidden;
+  background-color: var(--cream);
+  background-image: repeating-linear-gradient(transparent,transparent 31px,var(--rule-blue) 31px,var(--rule-blue) 32px);
+  background-position: 0 14px;
+}
+.hero::before {
+  content: '';
+  position: absolute; left: clamp(30px,4vw,70px);
+  top: 0; bottom: 0; width: 2px;
+  background: var(--rule-red); z-index: 1;
+}
+.hero-spacer { height: 100vh; position: relative; z-index: 1; }
+.hero-inner {
+  width: 100%; max-width: 1400px; margin: 0 auto;
+  display: grid; grid-template-columns: 1.1fr 1fr;
+  gap: clamp(1rem,2vw,2rem);
+  align-items: center;
+  position: relative; z-index: 2;
+}
+/* Hero Left */
+.hero-left { padding: 1rem 0; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.8rem; letter-spacing: 0.12em; color: var(--pencil-light);
+  text-transform: uppercase; margin-bottom: 1.2rem; font-weight: 500;
+}
+.hero-badge .dot { width: 7px; height: 7px; background: var(--crimson); border-radius: 50%; }
+.hero-title { font-family: var(--font-serif); font-weight: 700; line-height: 1.2; margin-bottom: 1.8rem; }
+.hero-title .line1 {
+  display: block;
+  font-size: clamp(2rem,5vw,3.4rem);
+  color: var(--ink); letter-spacing: -0.02em;
+}
+.hero-title .line2 {
+  display: block;
+  font-family: var(--font-hand);
+  font-size: clamp(2.8rem,7vw,5rem);
+  color: var(--crimson); font-weight: 700;
+  line-height: 1.15; transform: rotate(-1.5deg);
+  margin-top: 0.4rem; position: relative;
+}
+.hero-title .line2::after {
+  content: ''; position: absolute;
+  bottom: 2px; left: -1%; width: 102%; height: 12px;
+  background: var(--sakura); opacity: 0.4;
+  transform: rotate(-0.5deg); z-index: -1;
+}
+.hero-desc {
+  font-size: 1.15rem; color: var(--pencil);
+  line-height: 2.1; margin-bottom: 2.2rem; max-width: 560px;
+}
+.hero-stats { display: flex; gap: 2.5rem; margin-bottom: 1.8rem; }
+.hero-stat { text-align: center; }
+.hero-stat .num {
+  display: block; font-family: var(--font-serif);
+  font-size: 2.8rem; font-weight: 700;
+  color: var(--crimson); line-height: 1;
+}
+.hero-stat .label {
+  display: block; font-family: var(--font-hand);
+  font-size: 1.1rem; color: var(--pencil-light); margin-top: 4px;
+}
+.hero-meta {
+  font-size: 1.05rem; color: var(--pencil-light);
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--font-hand);
+}
+/* Hero Right — Collage */
+.hero-right {
+  position: relative;
+  min-height: 520px;
+  display: flex; align-items: center; justify-content: center;
+}
+.hero-photo {
+  position: relative;
+  width: clamp(280px,26vw,400px);
+  background: white;
+  padding: 14px 14px 50px;
+  box-shadow: var(--shadow-lift);
+  transform: rotate(-3deg);
+  z-index: 3;
+}
+.hero-photo .photo-inner {
+  width: 100%; aspect-ratio: 4/3;
+  background: linear-gradient(135deg,#F0E8DC 0%,#E8DDD0 50%,#DED5C8 100%);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.hero-photo .photo-inner svg { width: 110px; height: 88px; opacity: 0.15; }
+.hero-photo .photo-inner .ph-label { font-family: var(--font-hand); font-size: 1.05rem; color: var(--pencil-light); margin-top: 8px; }
+.hero-photo .photo-caption {
+  position: absolute; bottom: 14px; left: 18px;
+  font-family: var(--font-hand); font-size: 1.2rem; color: var(--pencil);
+}
+.hero-photo::before {
+  content: ''; position: absolute;
+  top: -12px; left: 30%; width: 90px; height: 26px;
+  background: rgba(168,200,176,0.5);
+  background-image: repeating-linear-gradient(45deg,transparent,transparent 3px,rgba(255,255,255,0.3) 3px,rgba(255,255,255,0.3) 6px);
+  transform: rotate(2deg); z-index: 5;
+}
+.hero-quote {
+  position: absolute;
+  top: -20px; right: -10px;
+  width: clamp(210px,20vw,280px);
+  padding: 1.6rem 1.5rem;
+  background: var(--gold-light);
+  box-shadow: var(--shadow-sticky);
+  transform: rotate(5deg);
+  z-index: 5;
+}
+.hero-quote::after {
+  content: ''; position: absolute; bottom: 0; right: 0;
+  width: 30px; height: 30px;
+  background: linear-gradient(135deg,transparent 50%,rgba(44,24,16,0.05) 50%);
+}
+.hero-quote .q-mark { font-family: var(--font-serif); font-size: 3.5rem; color: var(--crimson); line-height: 0.5; opacity: 0.3; }
+.hero-quote .q-text { font-family: var(--font-hand); font-size: 1.4rem; color: var(--ink); line-height: 1.5; margin: 0.6rem 0; }
+.hero-quote .q-author { font-family: var(--font-hand); font-size: 1.05rem; color: var(--pencil-light); }
+.hero-sticky2 {
+  position: absolute;
+  bottom: -30px; left: -20px;
+  width: clamp(180px,17vw,240px);
+  padding: 1.4rem 1.2rem;
+  background: #FFF0F5;
+  box-shadow: var(--shadow-sticky);
+  transform: rotate(-7deg);
+  z-index: 4;
+}
+.hero-sticky2::after {
+  content: ''; position: absolute; bottom: 0; right: 0;
+  width: 24px; height: 24px;
+  background: linear-gradient(135deg,transparent 50%,rgba(44,24,16,0.04) 50%);
+}
+.hero-sticky2 p { font-family: var(--font-hand); font-size: 1.2rem; color: var(--pencil); line-height: 1.4; }
+.hero-sticky2 .tiny-flower { position: absolute; top: -8px; right: 12px; font-size: 1rem; opacity: 0.6; }
+/* CSS cherry blossom to replace emoji */
+.tiny-flower-css {
+  position: absolute; top: -10px; right: 10px;
+  width: 16px; height: 16px;
+}
+.tiny-flower-css::before {
+  content: '';
+  position: absolute;
+  width: 16px; height: 16px;
+  background: var(--sakura);
+  border-radius: 80% 0 55% 50% / 55% 0 80% 50%;
+  opacity: 0.6;
+  transform: rotate(20deg);
+}
+.hero-date { position: absolute; bottom: 40px; right: 50px; z-index: 6; }
+.date-circle {
+  width: 82px; height: 82px;
+  border: 2.5px solid var(--crimson); border-radius: 50%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  transform: rotate(-15deg); opacity: 0.6; position: relative;
+}
+.date-circle::before { content: ''; position: absolute; inset: 4px; border: 1px solid var(--crimson); border-radius: 50%; opacity: 0.5; }
+.date-circle .d-month { font-family: var(--font-hand); font-size: 0.8rem; color: var(--crimson); letter-spacing: 0.05em; }
+.date-circle .d-year { font-family: var(--font-serif); font-size: 1.6rem; font-weight: 700; color: var(--crimson); line-height: 1; }
+.coffee-ring {
+  position: absolute; width: 110px; height: 110px;
+  border: 3px solid rgba(180,140,100,0.07);
+  border-radius: 50%; pointer-events: none;
+}
+.hero-branch {
+  position: absolute; top: -60px; right: -40px;
+  width: 340px; height: 260px; opacity: 0.18; z-index: 0; pointer-events: none;
+}
+.scroll-hint {
+  position: fixed; bottom: 2rem; left: 50%;
+  transform: translateX(-50%); z-index: 5;
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  color: var(--pencil-light); font-family: var(--font-hand); font-size: 1rem;
+  animation: hintBounce 2.5s ease-in-out infinite;
+  transition: opacity .4s;
+}
+.scroll-hint.hidden { opacity: 0; pointer-events: none; }
+.scroll-hint .hint-arrow { width: 1px; height: 28px; background: var(--pencil-light); position: relative; }
+.scroll-hint .hint-arrow::after {
+  content: ''; position: absolute; bottom: 0; left: -4px;
+  width: 9px; height: 9px;
+  border-right: 1.5px solid var(--pencil-light); border-bottom: 1.5px solid var(--pencil-light);
+  transform: rotate(45deg);
+}
+@keyframes hintBounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
+.hero-washi {
+  position: absolute; top: 40px; left: 8%;
+  width: 170px; height: 26px;
+  background: rgba(248,215,232,0.55);
+  background-image: repeating-linear-gradient(45deg,transparent,transparent 3px,rgba(255,255,255,0.35) 3px,rgba(255,255,255,0.35) 6px);
+  transform: rotate(-3deg); z-index: 3;
+}
+/* ===== CONTENT WRAP — slides over hero ===== */
+.content-wrap {
+  position: relative;
+  z-index: 10;
+}
+/* ===== DIARY PAGE — shared torn-top + opaque fill ===== */
+.diary-page {
+  position: relative;
+  /* heavy shadow for depth/lift effect */
+  box-shadow: 0 -10px 40px rgba(44,24,16,0.13), 0 -2px 10px rgba(44,24,16,0.06);
+}
+/* ---- OVERLAP between diary pages so Hero never peeks through ---- */
+.diary-page + .diary-page {
+  margin-top: -24px;   /* pull each section up so it overlaps the one above */
+  position: relative;
+}
+/* Stacking context: later sections sit on top of earlier ones */
+.content-wrap .diary-page:nth-child(1) { z-index: 11; }
+.content-wrap .diary-page:nth-child(2) { z-index: 12; }
+.content-wrap .diary-page:nth-child(3) { z-index: 13; }
+.content-wrap .diary-page:nth-child(4) { z-index: 14; }
+.content-wrap .diary-page:nth-child(5) { z-index: 15; }
+/* Torn top edge with OPAQUE background fill behind it to block Hero bleed */
+.torn-top {
+  clip-path: polygon(
+    0% 12px,3% 6px,6% 14px,9% 4px,12% 10px,15% 3px,
+    18% 11px,21% 5px,24% 13px,27% 2px,30% 9px,33% 5px,
+    36% 12px,39% 3px,42% 8px,45% 4px,48% 11px,51% 2px,
+    54% 7px,57% 4px,60% 13px,63% 6px,66% 10px,69% 3px,
+    72% 8px,75% 5px,78% 12px,81% 4px,84% 9px,87% 2px,
+    90% 7px,93% 5px,96% 11px,100% 6px,100% 100%,0% 100%
+  );
+  padding-top: 2rem !important;
+}
+/* Seam cover strips — opaque rectangles behind each torn seam */
+.diary-page + .diary-page::before {
+  content: '';
+  position: absolute;
+  top: -2px; left: 0; right: 0;
+  height: 18px;
+  z-index: -1;
+}
+/* ===== SECTION HEADER ===== */
+.sec-header { margin-bottom: 3.5rem; position: relative; text-align: center; }
+.sec-header.align-left { text-align: left; }
+.stamp {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 60px; height: 60px;
+  border: 2.5px solid var(--crimson); border-radius: 50%;
+  font-family: var(--font-hand); font-size: 1.6rem; font-weight: 700;
+  color: var(--crimson); transform: rotate(-8deg);
+  position: relative; margin-bottom: 0.8rem;
+}
+.stamp::before { content: ''; position: absolute; inset: 3px; border: 1px solid var(--crimson); border-radius: 50%; opacity: 0.4; }
+.sec-label {
+  display: block; font-size: 0.72rem; letter-spacing: 0.3em;
+  text-transform: uppercase; color: var(--pencil-light); font-weight: 500; margin-bottom: 0.4rem;
+}
+.sec-header h2 {
+  font-family: var(--font-serif);
+  font-size: clamp(2.2rem,5vw,3.2rem);
+  font-weight: 700; line-height: 1.3; color: var(--ink);
+}
+.sec-sub {
+  font-family: var(--font-hand);
+  font-size: 1.35rem; color: var(--pencil); margin-top: 0.4rem;
+}
+/* ===== ABOUT — kraft paper + wide stickies ===== */
+.about {
+  padding: clamp(5rem,8vh,7rem) clamp(1rem,3vw,3rem);
+  position: relative;
+  /* Darker, warmer kraft — distinct from Hero's cream */
+  background-color: #F0E8DC;
+  background-image: url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+  /* Inner shadow at top for page-stacking depth */
+  box-shadow:
+    inset 0 18px 40px -10px rgba(44,24,16,0.18),
+    0 -10px 40px rgba(44,24,16,0.13);
+}
+.about-stickies {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 0;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 2rem 0;
+}
+.about-card {
+  width: 34%;
+  min-width: 280px;
+  padding: 2.4rem 2rem 2.8rem;
+  position: relative;
+  box-shadow: var(--shadow-sticky);
+  transition: transform .5s cubic-bezier(.25,.46,.45,.94), box-shadow .4s ease;
+  cursor: default;
+  flex-shrink: 0;
+}
+.about-card::before {
+  content: ''; position: absolute;
+  top: -8px; left: 50%; transform: translateX(-50%);
+  width: 16px; height: 16px; border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%,#d44 0%,#a11 50%,#811 100%);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.25), inset 0 1px 2px rgba(255,255,255,0.3);
+  z-index: 10;
+}
+.about-card::after {
+  content: ''; position: absolute; bottom: 0; right: 0;
+  width: 28px; height: 28px;
+  background: linear-gradient(135deg,transparent 50%,rgba(44,24,16,0.06) 50%);
+}
+.about-card:nth-child(1) {
+  background: var(--gold-light);
+  transform: rotate(-6deg) translateY(18px) translateX(25px) scale(1.03);
+  z-index: 3;
+}
+.about-card:nth-child(2) {
+  background: #FFF0F5;
+  transform: rotate(4.5deg) translateY(-15px) scale(1);
+  z-index: 5;
+}
+.about-card:nth-child(3) {
+  background: #EFF6F0;
+  transform: rotate(-3.5deg) translateY(22px) translateX(-20px) scale(1.04);
+  z-index: 4;
+}
+.about-card:hover { z-index: 20; box-shadow: var(--shadow-lift); }
+.about-card:nth-child(1):hover { transform: rotate(-2deg) translateY(8px) translateX(25px) scale(0.98); }
+.about-card:nth-child(2):hover { transform: rotate(1.5deg) translateY(-20px) scale(1.04); }
+.about-card:nth-child(3):hover { transform: rotate(-1deg) translateY(12px) translateX(-20px) scale(1.12); }
+.about-card .card-icon { width: 42px; height: 42px; color: var(--pencil); margin-bottom: 1rem; opacity: 0.55; }
+.about-card h3 {
+  font-family: var(--font-serif); font-size: 1.4rem;
+  font-weight: 600; margin-bottom: 1rem; color: var(--ink);
+}
+.about-card p {
+  font-size: 1.1rem; color: var(--pencil); line-height: 2;
+}
+.about-card .tags { display: flex; gap: 0.7rem; margin-top: 1.4rem; flex-wrap: wrap; }
+.about-card .tag {
+  font-family: var(--font-hand); font-size: 1.05rem;
+  color: var(--crimson); padding: 2px 12px;
+  border: 1.5px dashed var(--crimson); opacity: 0.75;
+}
+/* ===== JOURNEY — editorial diary entries ===== */
+.journey {
+  padding: clamp(5rem,8vh,7rem) clamp(1rem,3vw,4rem);
+  position: relative;
+  background-color: var(--cream);
+  background-image: repeating-linear-gradient(transparent,transparent 31px,var(--rule-blue) 31px,var(--rule-blue) 32px);
+  background-position: 0 14px;
+  box-shadow:
+    inset 0 14px 30px -8px rgba(44,24,16,0.10),
+    0 -10px 40px rgba(44,24,16,0.10);
+}
+.journey-entries {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.j-entry {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: clamp(1.5rem,3vw,3rem);
+  margin-bottom: 4rem;
+  padding-bottom: 3rem;
+  border-bottom: 2px dashed rgba(44,24,16,0.08);
+  align-items: start;
+}
+.j-entry:last-child { border-bottom: none; margin-bottom: 0; }
+.j-date-col { text-align: center; padding-top: 0.5rem; position: sticky; top: 80px; }
+.j-date-big {
+  font-family: var(--font-serif);
+  font-size: clamp(2.8rem,5vw,3.8rem);
+  font-weight: 700; color: var(--crimson);
+  line-height: 1; letter-spacing: -0.02em;
+}
+.j-date-day {
+  font-family: var(--font-hand); font-size: 1.1rem;
+  color: var(--crimson); opacity: 0.7; margin-top: 2px;
+}
+.j-date-line {
+  width: 2px; height: 40px;
+  background: var(--crimson); opacity: 0.15;
+  margin: 12px auto 0;
+}
+.j-badge {
+  display: inline-block;
+  font-family: var(--font-hand); font-size: 1.1rem; font-weight: 600;
+  color: white; background: var(--crimson);
+  padding: 4px 20px; margin-bottom: 1rem;
+  transform: rotate(-1deg);
+}
+.j-badge.green { background: var(--green-deep); }
+.j-content h3 {
+  font-family: var(--font-serif);
+  font-size: clamp(1.6rem,3.5vw,2.4rem);
+  font-weight: 700; color: var(--ink);
+  margin-bottom: 1.2rem; line-height: 1.3;
+}
+.j-text {
+  font-size: 1.15rem; color: var(--pencil);
+  line-height: 2.1; margin-bottom: 1.8rem;
+}
+.j-visual-row {
+  display: flex; gap: 1.5rem; align-items: stretch;
+  margin-bottom: 1.8rem; flex-wrap: wrap;
+}
+.j-photo {
+  flex: 0 0 clamp(180px,22vw,260px);
+  background: white;
+  padding: 10px 10px 36px;
+  box-shadow: var(--shadow-paper);
+  transform: rotate(var(--rot,-2deg));
+  position: relative;
+}
+.j-photo .jp-inner {
+  width: 100%; aspect-ratio: 4/3;
+  background: var(--cream-warm);
+  display: grid; place-items: center;
+}
+.j-photo .jp-inner span { font-size: 1.6rem; opacity: 0.35; }
+/* Camera icon placeholder via SVG instead of emoji */
+.j-photo .jp-inner .cam-icon {
+  width: 40px; height: 40px;
+  opacity: 0.25;
+}
+.j-photo .jp-cap {
+  position: absolute; bottom: 8px; left: 12px;
+  font-family: var(--font-hand); font-size: 1rem; color: var(--pencil);
+}
+.j-photo::before {
+  content: ''; position: absolute;
+  top: -9px; left: 35%; width: 55px; height: 20px;
+  background: rgba(248,215,232,0.55);
+  background-image: repeating-linear-gradient(45deg,transparent,transparent 2px,rgba(255,255,255,0.3) 2px,rgba(255,255,255,0.3) 5px);
+  transform: rotate(var(--tape-rot,2deg)); z-index: 5;
+}
+.j-quote {
+  flex: 1; min-width: 200px;
+  background: var(--gold-light);
+  padding: 1.8rem 1.6rem;
+  box-shadow: var(--shadow-sticky);
+  transform: rotate(var(--qrot,1.5deg));
+  display: flex; flex-direction: column; justify-content: center;
+  position: relative;
+}
+.j-quote::after {
+  content: ''; position: absolute; bottom: 0; right: 0;
+  width: 26px; height: 26px;
+  background: linear-gradient(135deg,transparent 50%,rgba(44,24,16,0.04) 50%);
+}
+.j-quote .jq-mark {
+  font-family: var(--font-serif); font-size: 3rem;
+  color: var(--crimson); line-height: 0.5; opacity: 0.25;
+}
+.j-quote .jq-text {
+  font-family: var(--font-hand); font-size: 1.5rem;
+  color: var(--ink); line-height: 1.5; margin: 0.6rem 0;
+}
+.j-quote .jq-author {
+  font-family: var(--font-hand); font-size: 1.05rem;
+  color: var(--pencil-light);
+}
+.j-meta {
+  display: flex; gap: 2rem; flex-wrap: wrap;
+}
+.j-meta-item {
+  display: flex; align-items: center; gap: 7px;
+  font-family: var(--font-hand); font-size: 1.1rem; color: var(--pencil-light);
+}
+.j-meta-item svg { width: 18px; height: 18px; flex-shrink: 0; }
+/* ===== LECTURES — scattered notebook pages ===== */
+.lectures {
+  padding: clamp(5rem,8vh,7rem) clamp(1rem,3vw,3rem);
+  position: relative;
+  background-color: #F5F4EE;
+  background-image:
+    linear-gradient(rgba(168,200,176,0.12) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(168,200,176,0.12) 1px,transparent 1px);
+  background-size: 22px 22px;
+  box-shadow:
+    inset 0 14px 30px -8px rgba(44,24,16,0.10),
+    0 -10px 40px rgba(44,24,16,0.10);
+}
+.lecture-desk {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+.lec-card {
+  padding: clamp(2rem,3vw,3rem);
+  position: relative;
+  box-shadow: var(--shadow-lift);
+  transition: transform .4s cubic-bezier(.25,.46,.45,.94), box-shadow .4s;
+  cursor: default;
+}
+.lec-card::before {
+  content: ''; position: absolute;
+  top: -10px; z-index: 5;
+  width: 75px; height: 24px;
+  transform: rotate(var(--tape-a,2deg));
+}
+.lec-card:hover { z-index: 10; box-shadow: 5px 10px 30px rgba(44,24,16,0.16); }
+.lec-card:nth-child(1) {
+  background: white;
+  background-image: repeating-linear-gradient(transparent,transparent 27px,rgba(120,160,200,0.08) 27px,rgba(120,160,200,0.08) 28px);
+  transform: rotate(-2.5deg) translateY(8px);
+}
+.lec-card:nth-child(1)::before {
+  left: 38%;
+  background: rgba(248,215,232,0.55);
+  background-image: repeating-linear-gradient(45deg,transparent,transparent 2px,rgba(255,255,255,0.3) 2px,rgba(255,255,255,0.3) 5px);
+  --tape-a: 3deg;
+}
+.lec-card:nth-child(1):hover { transform: rotate(-0.5deg) translateY(2px) scale(1.02); }
+.lec-card:nth-child(2) {
+  background: #FDFAF5;
+  transform: rotate(2deg) translateY(-6px);
+}
+.lec-card:nth-child(2)::before {
+  left: 42%;
+  background: rgba(250,193,137,0.5);
+  background-image: repeating-linear-gradient(-45deg,transparent,transparent 3px,rgba(255,255,255,0.3) 3px,rgba(255,255,255,0.3) 6px);
+  --tape-a: -2deg;
+}
+.lec-card:nth-child(2):hover { transform: rotate(0.5deg) translateY(-10px) scale(1.02); }
+.lec-card:nth-child(3) {
+  background: #FFF9F4;
+  background-image:
+    linear-gradient(rgba(168,200,176,0.06) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(168,200,176,0.06) 1px,transparent 1px);
+  background-size: 18px 18px;
+  transform: rotate(-1.5deg) translateY(12px);
+}
+.lec-card:nth-child(3)::before {
+  left: 35%;
+  background: rgba(168,200,176,0.5);
+  background-image: repeating-linear-gradient(45deg,transparent,transparent 2px,rgba(255,255,255,0.25) 2px,rgba(255,255,255,0.25) 4px);
+  --tape-a: 4deg;
+}
+.lec-card:nth-child(3):hover { transform: rotate(0deg) translateY(6px) scale(1.02); }
+.lec-card:nth-child(4) {
+  background: #F9F5EF;
+  transform: rotate(1.8deg) translateY(-4px);
+}
+.lec-card:nth-child(4)::before {
+  left: 40%;
+  background: rgba(162,28,38,0.15);
+  background-image: repeating-linear-gradient(-45deg,transparent,transparent 2px,rgba(255,255,255,0.4) 2px,rgba(255,255,255,0.4) 5px);
+  --tape-a: -3deg;
+}
+.lec-card:nth-child(4):hover { transform: rotate(0.3deg) translateY(-8px) scale(1.02); }
+.lec-num {
+  font-family: var(--font-serif); font-size: 4rem;
+  font-weight: 700; color: var(--crimson); opacity: 0.08;
+  line-height: 1; position: absolute; top: 12px; right: 16px;
+}
+.lec-icon {
+  width: 48px; height: 48px;
+  color: var(--crimson); opacity: 0.5; margin-bottom: 1rem;
+}
+.lec-cat {
+  display: inline-block; font-size: 0.72rem;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--pencil-light); margin-bottom: 0.3rem; font-weight: 500;
+}
+.lec-card h3 {
+  font-family: var(--font-serif); font-size: 1.4rem;
+  font-weight: 600; margin-bottom: 0.8rem; color: var(--ink);
+  position: relative; display: inline-block;
+}
+.lec-card:nth-child(1) h3::after,
+.lec-card:nth-child(2) h3::after,
+.lec-card:nth-child(3) h3::after,
+.lec-card:nth-child(4) h3::after {
+  content: ''; position: absolute;
+  bottom: 0; left: -3px; width: calc(100% + 6px); height: 7px;
+  z-index: -1;
+}
+.lec-card:nth-child(1) h3::after { background: var(--sakura); opacity: 0.4; }
+.lec-card:nth-child(2) h3::after { background: var(--gold); opacity: 0.3; }
+.lec-card:nth-child(3) h3::after { background: var(--green); opacity: 0.35; }
+.lec-card:nth-child(4) h3::after { background: rgba(162,28,38,0.15); }
+.lec-card .desc {
+  font-size: 1.1rem; color: var(--pencil); line-height: 1.95; margin-bottom: 1.2rem;
+}
+.lec-list li {
+  font-size: 1.05rem; color: var(--pencil);
+  padding: 5px 0 5px 28px; position: relative; line-height: 1.75;
+}
+.lec-list li::before {
+  content: ''; position: absolute; left: 2px; top: 11px;
+  width: 13px; height: 13px; border: 1.5px solid var(--green-deep);
+}
+.lec-list li::after {
+  content: '\2713'; position: absolute; left: 3px; top: 4px;
+  font-size: 0.9rem; color: var(--green-deep); font-weight: 700;
+}
+.security-stamp {
+  position: absolute; bottom: 18px; right: 22px;
+  font-family: var(--font-hand); font-size: 1.5rem;
+  color: var(--crimson); opacity: 0.12;
+  transform: rotate(-12deg);
+  border: 2px solid currentColor; padding: 3px 14px;
+}
+/* ===== MOMENTS — grid of big polaroids ===== */
+.moments {
+  padding: clamp(5rem,8vh,7rem) clamp(1rem,3vw,3rem);
+  position: relative;
+  background-color: #EDE4D8;
+  background-image: url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  overflow: hidden;
+  box-shadow:
+    inset 0 14px 30px -8px rgba(44,24,16,0.12),
+    0 -10px 40px rgba(44,24,16,0.10);
+}
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1.5rem,3vw,2.5rem);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+.pol-item {
+  background: white;
+  padding: 12px 12px 44px;
+  box-shadow: var(--shadow-lift);
+  cursor: pointer;
+  transition: transform .4s cubic-bezier(.25,.46,.45,.94), box-shadow .4s;
+  position: relative;
+}
+.pol-item::before {
+  content: ''; position: absolute;
+  top: -9px; width: 55px; height: 22px; z-index: 5;
+}
+.pol-item .pi-inner {
+  width: 100%; aspect-ratio: 4/3;
+  background: var(--cream);
+  display: grid; place-items: center;
+  border: 1px solid rgba(44,24,16,0.04);
+  overflow: hidden;
+}
+.pol-item .pi-icon {
+  width: 36px; height: 36px; opacity: 0.25;
+}
+.pol-item .pi-label {
+  font-family: var(--font-hand); font-size: 1rem;
+  color: var(--pencil-light); margin-top: 4px;
+}
+.pol-item .pi-cap {
+  position: absolute; bottom: 10px; left: 14px;
+  font-family: var(--font-hand); font-size: 1.1rem; color: var(--pencil);
+}
+.pol-item:hover { z-index: 50; box-shadow: 5px 10px 30px rgba(44,24,16,0.18); }
+.pol-item:nth-child(1) { transform: rotate(-3deg); }
+.pol-item:nth-child(1)::before {
+  left: 38%; background: rgba(248,215,232,0.55);
+  background-image: repeating-linear-gradient(45deg,transparent,transparent 2px,rgba(255,255,255,0.3) 2px,rgba(255,255,255,0.3) 5px);
+  transform: rotate(3deg);
+}
+.pol-item:nth-child(1):hover { transform: rotate(-0.5deg) scale(1.05); }
+.pol-item:nth-child(2) { transform: rotate(2.5deg); }
+.pol-item:nth-child(2)::before {
+  left: 40%; background: rgba(250,193,137,0.5);
+  background-image: repeating-linear-gradient(-45deg,transparent,transparent 3px,rgba(255,255,255,0.3) 3px,rgba(255,255,255,0.3) 6px);
+  transform: rotate(-2deg);
+}
+.pol-item:nth-child(2):hover { transform: rotate(0.5deg) scale(1.05); }
+.pol-item:nth-child(3) { transform: rotate(-1.5deg); }
+.pol-item:nth-child(3)::before {
+  left: 35%; background: rgba(168,200,176,0.5);
+  background-image: repeating-linear-gradient(45deg,transparent,transparent 2px,rgba(255,255,255,0.25) 2px,rgba(255,255,255,0.25) 4px);
+  transform: rotate(4deg);
+}
+.pol-item:nth-child(3):hover { transform: rotate(0.5deg) scale(1.05); }
+.pol-item:nth-child(4) { transform: rotate(3.5deg); }
+.pol-item:nth-child(4)::before {
+  left: 42%; background: rgba(248,215,232,0.5);
+  background-image: repeating-linear-gradient(-45deg,transparent,transparent 2px,rgba(255,255,255,0.3) 2px,rgba(255,255,255,0.3) 5px);
+  transform: rotate(-3deg);
+}
+.pol-item:nth-child(4):hover { transform: rotate(0.5deg) scale(1.05); }
+.pol-item:nth-child(5) { transform: rotate(-4deg); }
+.pol-item:nth-child(5)::before {
+  left: 36%; background: rgba(250,193,137,0.45);
+  background-image: repeating-linear-gradient(45deg,transparent,transparent 3px,rgba(255,255,255,0.3) 3px,rgba(255,255,255,0.3) 6px);
+  transform: rotate(2deg);
+}
+.pol-item:nth-child(5):hover { transform: rotate(-0.5deg) scale(1.05); }
+/* Ticket stub */
+.gallery-ticket-grid {
+  display: flex; align-items: center; justify-content: center;
+  padding: 2rem;
+}
+.gallery-ticket {
+  width: 100%; max-width: 240px;
+  padding: 1.2rem 1.4rem;
+  background: var(--gold-light);
+  border: 1.5px dashed var(--gold);
+  transform: rotate(3deg);
+  font-family: var(--font-hand); font-size: 1.15rem;
+  color: var(--pencil); text-align: center;
+  box-shadow: var(--shadow-sticky); position: relative;
+}
+.gallery-ticket::before {
+  content: ''; position: absolute; left: -6px; top: 50%;
+  width: 12px; height: 12px; background: #EDE4D8; border-radius: 50%;
+  transform: translateY(-50%);
+}
+.gallery-ticket::after {
+  content: ''; position: absolute; right: -6px; top: 50%;
+  width: 12px; height: 12px; background: #EDE4D8; border-radius: 50%;
+  transform: translateY(-50%);
+}
+/* ===== RESULTS ===== */
+.results {
+  padding: clamp(5rem,8vh,7rem) clamp(1rem,3vw,3rem);
+  position: relative;
+  background-color: var(--cream);
+  background-image: repeating-linear-gradient(transparent,transparent 31px,var(--rule-blue) 31px,var(--rule-blue) 32px);
+  background-position: 0 14px;
+  box-shadow:
+    inset 0 14px 30px -8px rgba(44,24,16,0.10),
+    0 -10px 40px rgba(44,24,16,0.10);
+}
+.results-inner {
+  max-width: 1100px; margin: 0 auto;
+}
+.results-stats-row {
+  display: flex; gap: 1.5rem;
+  justify-content: center;
+  margin-bottom: 3rem; flex-wrap: wrap;
+}
+.result-stat {
+  background: white;
+  border-left: 3px solid var(--crimson);
+  padding: 1.5rem 2.5rem;
+  box-shadow: var(--shadow-paper);
+  text-align: center;
+  min-width: 160px;
+  transform: rotate(var(--r,0deg));
+}
+.result-stat:nth-child(1) { --r: -2deg; }
+.result-stat:nth-child(2) { --r: 1.5deg; }
+.result-stat:nth-child(3) { --r: -1deg; }
+.result-stat .r-num {
+  display: block; font-family: var(--font-serif);
+  font-size: 3rem; font-weight: 700; color: var(--crimson); line-height: 1;
+}
+.result-stat .r-label {
+  display: block; font-family: var(--font-hand);
+  font-size: 1.1rem; color: var(--pencil); margin-top: 6px;
+}
+.results-text {
+  text-align: center; max-width: 860px; margin: 0 auto;
+}
+.results-text h2 {
+  font-family: var(--font-serif);
+  font-size: clamp(1.8rem,3.5vw,2.4rem);
+  font-weight: 700; margin-bottom: 1.2rem;
+}
+.results-text p {
+  font-size: 1.15rem; color: var(--pencil);
+  line-height: 2.1; margin-bottom: 1rem; text-align: left;
+}
+.sticker {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--font-hand); font-size: 1.2rem;
+  color: var(--crimson); background: var(--sakura);
+  padding: 6px 20px; transform: rotate(-3deg);
+  margin-top: 1rem;
+}
+/* ===== FOOTER ===== */
+.footer {
+  padding: 2.5rem clamp(1rem,3vw,3rem);
+  background: var(--ink);
+  color: rgba(253,246,238,0.6);
+  position: relative; z-index: 20;
+}
+.footer .f-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  max-width: 1100px; margin: 0 auto;
+}
+.footer-brand { display: flex; align-items: center; gap: 10px; }
+.footer-brand .f-stamp {
+  width: 34px; height: 34px;
+  border: 1.5px solid rgba(253,246,238,0.3); border-radius: 50%;
+  display: grid; place-items: center;
+  font-size: 0.55rem; color: rgba(253,246,238,0.5);
+  transform: rotate(-12deg);
+}
+.footer-brand .f-name { font-family: var(--font-hand); font-size: 1.3rem; color: rgba(253,246,238,0.7); }
+.footer-brand .f-tag { font-size: 0.78rem; display: block; opacity: 0.5; }
+.footer-meta { text-align: right; font-size: 0.82rem; }
+.footer-meta p { margin-bottom: 0.2rem; }
+/* ===== BACK TO TOP ===== */
+.back-top {
+  position: fixed; bottom: 2rem; right: 2rem;
+  width: 46px; height: 46px;
+  border: 2px solid var(--crimson);
+  display: grid; place-items: center;
+  color: var(--crimson); z-index: 90000;
+  opacity: 0; pointer-events: none;
+  transition: opacity .3s, transform .3s;
+  background: var(--cream); transform: rotate(-5deg);
+}
+.back-top.visible { opacity: 0.7; pointer-events: auto; }
+.back-top:hover { opacity: 1; transform: rotate(0deg); }
+.back-top svg { width: 22px; height: 22px; }
+/* ===== SCROLL REVEAL ===== */
+.reveal {
+  opacity: 0; transform: translateY(28px);
+  transition: opacity .8s ease, transform .8s ease;
+}
+.reveal.revealed { opacity: 1; transform: translateY(0); }
+.reveal-d1 { transition-delay: .1s; }
+.reveal-d2 { transition-delay: .2s; }
+.reveal-d3 { transition-delay: .3s; }
+.reveal-d4 { transition-delay: .4s; }
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1000px) {
+  .hero-inner {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    max-width: 600px;
+  }
+  .hero-right {
+    min-height: 360px;
+    margin: 0 auto;
+  }
+  .hero-photo { width: clamp(230px,55vw,300px); }
+  .hero-quote { width: clamp(190px,42vw,240px); right: 0; top: -15px; }
+  .hero-sticky2 { width: clamp(160px,38vw,200px); bottom: -20px; left: 0; }
+  .hero-date { bottom: 10px; right: 10px; }
+  .date-circle { width: 62px; height: 62px; }
+  .date-circle .d-year { font-size: 1.2rem; }
+  .about-stickies {
+    flex-direction: column; align-items: center; gap: 1.5rem;
+  }
+  .about-card {
+    width: clamp(280px,90%,480px) !important;
+    min-width: 0;
+  }
+  .about-card:nth-child(1) { transform: rotate(-4deg) translateX(15px) !important; }
+  .about-card:nth-child(2) { transform: rotate(3deg) translateX(-10px) !important; }
+  .about-card:nth-child(3) { transform: rotate(-2.5deg) translateX(8px) !important; }
+  .about-card:nth-child(1):hover { transform: rotate(-1.5deg) translateX(15px) scale(1.02) !important; }
+  .about-card:nth-child(2):hover { transform: rotate(1deg) translateX(-10px) scale(1.02) !important; }
+  .about-card:nth-child(3):hover { transform: rotate(-0.5deg) translateX(8px) scale(1.1) !important; }
+  .j-entry { grid-template-columns: 80px 1fr; gap: 1rem; }
+  .j-date-big { font-size: 2.2rem; }
+  .j-visual-row { flex-direction: column; }
+  .j-photo { flex: 0 0 auto; width: clamp(200px,60vw,300px); }
+  .lecture-desk { grid-template-columns: 1fr; max-width: 560px; }
+  .photo-grid { grid-template-columns: repeat(2,1fr); }
+  .footer .f-inner { flex-direction: column; gap: 1rem; text-align: center; }
+  .footer-meta { text-align: center; }
+  /* Side nav shrinks on tablet */
+  .side-nav a {
+    font-size: 0.72rem;
+    padding: 8px 10px 8px 16px;
+    min-width: 90px;
+    transform: translateX(calc(100% - 34px));
+  }
+  .side-nav a .bookmark-dot { left: 10px; }
+}
+@media (max-width: 640px) {
+  html { font-size: 15px; }
+  /* Hide side-nav, show hamburger on mobile */
+  .side-nav { display: none; }
+  .hamburger { display: flex; }
+  .hero { padding: 3.5rem 1rem; }
+  .hero::before { left: 24px; }
+  .hero-washi { display: none; }
+  .hero-stat .num { font-size: 2rem; }
+  .hero-stats { gap: 1.5rem; }
+  .hero-desc { font-size: 1.05rem; }
+  .about, .journey, .lectures, .moments, .results {
+    padding-left: 0.8rem; padding-right: 0.8rem;
+  }
+  .j-entry { grid-template-columns: 1fr; }
+  .j-date-col {
+    position: static;
+    display: flex; align-items: center; gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  .j-date-line { display: none; }
+  .photo-grid { grid-template-columns: 1fr; max-width: 340px; margin: 0 auto; }
+  .gallery-ticket-grid { display: none; }
+  .results-stats-row { flex-direction: column; align-items: center; }
+  .lec-card { padding: 1.6rem 1.4rem 2rem; }
+  .about-card {
+    width: calc(100% - 1rem) !important;
+    padding: 2rem 1.5rem 2.2rem;
+  }
+  .j-quote .jq-text { font-size: 1.3rem; }
+  .sec-header h2 { font-size: clamp(1.8rem,7vw,2.6rem); }
+  .sec-sub { font-size: 1.15rem; }
+  .back-top { bottom: 1.2rem; right: 1.2rem; width: 40px; height: 40px; }
+}
+@media (max-width: 400px) {
+  html { font-size: 14px; }
+  .hero-stats { flex-wrap: wrap; gap: 1rem; }
+  .hero-meta { flex-wrap: wrap; font-size: 0.95rem; }
+  .hero-right { min-height: 300px; }
+  .hero-photo { width: 210px; }
+  .hero-quote { width: 180px; }
+  .hero-sticky2 { width: 150px; }
+}
+</style>
 </head>
 <body>
-    <!-- 页面加载动画 -->
-    <div class="preloader">
-        <div class="loader"></div>
+<!-- Sakura Petals -->
+<div class="petals-container" aria-hidden="true">
+  <span class="petal"></span><span class="petal"></span>
+  <span class="petal"></span><span class="petal"></span>
+  <span class="petal"></span><span class="petal"></span>
+  <span class="petal"></span><span class="petal"></span>
+  <span class="petal"></span><span class="petal"></span>
+</div>
+<!-- Scroll Thread -->
+<div class="scroll-thread" id="scrollThread"></div>
+<!-- Side Bookmark Navigation -->
+<nav class="side-nav" id="sideNav">
+  <a href="#about" class="side-link" data-section="about">
+    <span class="bookmark-dot"></span>
+    项目概述
+  </a>
+  <a href="#journey" class="side-link" data-section="journey">
+    <span class="bookmark-dot"></span>
+    活动历程
+  </a>
+  <a href="#content" class="side-link" data-section="content">
+    <span class="bookmark-dot"></span>
+    讲座内容
+  </a>
+  <a href="#moments" class="side-link" data-section="moments">
+    <span class="bookmark-dot"></span>
+    精彩瞬间
+  </a>
+  <a href="#results" class="side-link" data-section="results">
+    <span class="bookmark-dot"></span>
+    项目成果
+  </a>
+</nav>
+<!-- Mobile Hamburger -->
+<button class="hamburger" id="hamburger" aria-label="菜单">
+  <span></span><span></span><span></span>
+</button>
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#hero" class="mm-link">首页</a>
+  <a href="#about" class="mm-link">项目概述</a>
+  <a href="#journey" class="mm-link">活动历程</a>
+  <a href="#content" class="mm-link">讲座内容</a>
+  <a href="#moments" class="mm-link">精彩瞬间</a>
+  <a href="#results" class="mm-link">项目成果</a>
+</div>
+<!-- ====================== HERO (FIXED) ====================== -->
+<section id="hero" class="hero">
+  <div class="hero-washi"></div>
+  <div class="hero-inner">
+    <div class="hero-left">
+      <span class="hero-badge">
+        <span class="dot"></span>
+        社区服务项目结题报告
+      </span>
+      <h1 class="hero-title">
+        <span class="line1">当科技遇见温情</span>
+        <span class="line2">AI点亮社区生活</span>
+      </h1>
+      <p class="hero-desc">
+        走进城市社区，用AI技术陪伴退休长者们跨越数字鸿沟。两场讲座，五十余位学员，从陌生到熟悉，从犹豫到自信。每一次讲解都倾注着耐心，每一个笑容都温暖人心。
+      </p>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="num">2</span>
+          <span class="label">场主题讲座</span>
+        </div>
+        <div class="hero-stat">
+          <span class="num">50+</span>
+          <span class="label">社区学员</span>
+        </div>
+        <div class="hero-stat">
+          <span class="num">95%</span>
+          <span class="label">满意度</span>
+        </div>
+      </div>
+      <div class="hero-meta">
+        <span>社区文化活动中心</span>
+        <span>·</span>
+        <span>2025年5月</span>
+      </div>
     </div>
-
-    <!-- 导航栏 -->
-    <nav class="navbar hardware-accelerated">
-        <a href="#welcome" class="logo">
-            <i class="fas fa-robot icon-float"></i>
-            <span>AI公益课堂</span>
-        </a>
-        <ul class="nav-links">
-            <li><a href="#welcome" class="active">首页</a></li>
-            <li><a href="#articles">课程内容</a></li>
-            <li><a href="#videos">视频回放</a></li>
+    <div class="hero-right">
+      <!-- Sakura Branch -->
+      <svg class="hero-branch" viewBox="0 0 320 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 200 Q70 170 120 130 Q170 90 210 75 Q250 60 310 20" stroke="#A8C8B0" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <path d="M120 130 Q110 95 130 85" stroke="#A8C8B0" stroke-width="1.5" fill="none"/>
+        <path d="M210 75 Q200 40 220 35" stroke="#A8C8B0" stroke-width="1.5" fill="none"/>
+        <g transform="translate(125,83) rotate(-10)">
+          <ellipse rx="9" ry="4.5" transform="rotate(0)" fill="#F8D7E8" opacity="0.7"/>
+          <ellipse rx="9" ry="4.5" transform="rotate(72)" fill="#F8D7E8" opacity="0.7"/>
+          <ellipse rx="9" ry="4.5" transform="rotate(144)" fill="#F8D7E8" opacity="0.6"/>
+          <ellipse rx="9" ry="4.5" transform="rotate(216)" fill="#F8D7E8" opacity="0.7"/>
+          <ellipse rx="9" ry="4.5" transform="rotate(288)" fill="#F8D7E8" opacity="0.6"/>
+          <circle r="3.5" fill="#A21C26" opacity="0.25"/>
+        </g>
+        <g transform="translate(222,33) rotate(15)">
+          <ellipse rx="7" ry="3.5" transform="rotate(0)" fill="#F8D7E8" opacity="0.6"/>
+          <ellipse rx="7" ry="3.5" transform="rotate(72)" fill="#F8D7E8" opacity="0.7"/>
+          <ellipse rx="7" ry="3.5" transform="rotate(144)" fill="#F8D7E8" opacity="0.6"/>
+          <ellipse rx="7" ry="3.5" transform="rotate(216)" fill="#F8D7E8" opacity="0.5"/>
+          <ellipse rx="7" ry="3.5" transform="rotate(288)" fill="#F8D7E8" opacity="0.7"/>
+          <circle r="2.5" fill="#A21C26" opacity="0.2"/>
+        </g>
+        <ellipse cx="170" cy="100" rx="4" ry="2.5" fill="#F8D7E8" opacity="0.35" transform="rotate(30 170 100)"/>
+        <ellipse cx="260" cy="50" rx="3.5" ry="2" fill="#F8D7E8" opacity="0.3" transform="rotate(-20 260 50)"/>
+      </svg>
+      <!-- Main Polaroid -->
+      <div class="hero-photo">
+        <div class="photo-inner">
+          <svg viewBox="0 0 100 80" fill="none" stroke="#A8C8B0" stroke-width="1.2">
+            <rect x="10" y="12" width="80" height="50" rx="1"/>
+            <circle cx="32" cy="28" r="6"/>
+            <path d="M10 52 L30 38 L50 52 L70 42 L90 55"/>
+            <path d="M25 68 L50 62 L75 68"/>
+          </svg>
+          <span class="ph-label">社区AI讲座活动场景</span>
+        </div>
+        <span class="photo-caption">活动记录📸</span>
+      </div>
+      <!-- Quote Sticky -->
+      <div class="hero-quote">
+        <span class="q-mark">"</span>
+        <p class="q-text">原来手机还能这么用！太神奇了！</p>
+        <span class="q-author">— 学员 王阿姨</span>
+      </div>
+      <!-- Second Sticky -->
+      <div class="hero-sticky2">
+        <span class="tiny-flower-css">🌸</span>
+        <p>今天学会用语音<br>助手设闹钟啦~</p>
+      </div>
+      <!-- Date Stamp -->
+      <div class="hero-date">
+        <div class="date-circle">
+          <span class="d-month">MAY</span>
+          <span class="d-year">2025</span>
+        </div>
+      </div>
+      <!-- Coffee Ring -->
+      <div class="coffee-ring" style="bottom:50px;right:-10px;"></div>
+    </div>
+  </div>
+</section>
+<!-- Spacer to push content below fixed hero -->
+<div class="hero-spacer"></div>
+<!-- Scroll Hint -->
+<div class="scroll-hint" id="scrollHint">
+  <span>翻 页</span>
+  <span class="hint-arrow"></span>
+</div>
+<!-- ====================== MAIN CONTENT (slides over hero) ====================== -->
+<main class="content-wrap">
+  <!-- ====================== ABOUT ====================== -->
+  <section id="about" class="about diary-page torn-top">
+    <header class="sec-header reveal">
+      <div class="stamp">01</div>
+      <span class="sec-label">PROJECT OVERVIEW</span>
+      <h2>项目概述</h2>
+      <p class="sec-sub">让学生带动老年人，用科技传递温度</p>
+    </header>
+    <div class="about-stickies">
+      <div class="about-card reveal reveal-d1">
+        <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M12 14l9-5-9-5-9 5 9 5z"/>
+          <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/>
+        </svg>
+        <h3>学生主导</h3>
+        <p>高校学生团队全程策划与执行，用年轻人的视角解读前沿技术。我们将复杂的AI概念转化为通俗易懂的生活场景，让技术不再高冷。每一次讲解都倾注着耐心，每一个笑容都温暖人心。</p>
+        <div class="tags">
+          <span class="tag">创意策划</span>
+          <span class="tag">亲和教学</span>
+        </div>
+      </div>
+      <div class="about-card reveal reveal-d2">
+        <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+        </svg>
+        <h3>教授指导</h3>
+        <p>专业教授全程把关教学内容，确保科学严谨与切实可行。从课程设计到效果评估，每一个环节都经过专业论证。我们不仅传授知识，更传递对技术的敬畏与热爱。</p>
+        <div class="tags">
+          <span class="tag">专业把关</span>
+          <span class="tag">质量保证</span>
+        </div>
+      </div>
+      <div class="about-card reveal reveal-d3">
+        <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+        </svg>
+        <h3>精准服务</h3>
+        <p>深入社区调研，了解老年  真实需求。定制化课程设计，手把手教学，确保每位学员都能学会、敢用、爱用。我们相信科技应该服务于每一个人。</p>
+        <div class="tags">
+          <span class="tag">需求导向</span>
+          <span class="tag">因材施教</span>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ====================== JOURNEY ====================== -->
+  <section id="journey" class="journey diary-page torn-top">
+    <header class="sec-header reveal">
+      <div class="stamp" style="transform:rotate(-12deg)">02</div>
+      <span class="sec-label">OUR JOURNEY</span>
+      <h2>活动历程</h2>
+      <p class="sec-sub">两周的陪伴，见证成长与转变</p>
+    </header>
+    <div class="journey-entries">
+      <!-- Entry 1 -->
+      <article class="j-entry reveal">
+        <div class="j-date-col">
+          <div class="j-date-big">5.10</div>
+          <div class="j-date-day">SATURDAY</div>
+          <div class="j-date-line"></div>
+        </div>
+        <div class="j-content">
+          <span class="j-badge">第一讲</span>
+          <h3>创意AI体验</h3>
+          <p class="j-text">
+            从"你好小助手"开始，学员们体验了语音人机交互的便利。随后的图片修复和AI视频生成环节，更是让在场的长辈们惊叹不已——原来科技可以这么有趣！张阿姨第一次用AI修复了她年轻时的老照片，激动地说这简直是魔法。
+          </p>
+          <div class="j-visual-row">
+            <div class="j-photo" style="--rot:-2deg;--tape-rot:2deg">
+              <div class="jp-inner">
+                <svg class="cam-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/>
+                  <circle cx="12" cy="13" r="4"/>
+                </svg>
+              </div>
+              <span class="jp-cap">第一讲现场</span>
+            </div>
+            <div class="j-quote" style="--qrot:2deg">
+              <span class="jq-mark">"</span>
+              <p class="jq-text">这比去照相馆还好！年轻时的照片都变清楚了！</p>
+              <span class="jq-author">— 学员 张阿姨</span>
+            </div>
+          </div>
+          <div class="j-meta">
+            <span class="j-meta-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              14:00 — 16:00
+            </span>
+            <span class="j-meta-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              社区文化活动中心
+            </span>
+          </div>
+        </div>
+      </article>
+      <!-- Entry 2 -->
+      <article class="j-entry reveal">
+        <div class="j-date-col">
+          <div class="j-date-big">5.17</div>
+          <div class="j-date-day">SATURDAY</div>
+          <div class="j-date-line"></div>
+        </div>
+        <div class="j-content">
+          <span class="j-badge green">第二讲</span>
+          <h3>智慧生活与安全防护</h3>
+          <p class="j-text">
+            学员们学会了用AI规划旅游行程、生成朋友圈文案。最后的防AI诈骗教育环节，通过真实案例讲解，帮助老年人识别虚假信息，既享受便利又学会保护自己。大家纷纷表示收获满满，已经迫不及待想要用AI规划下一次社区出游了。
+          </p>
+          <div class="j-visual-row">
+            <div class="j-photo" style="--rot:3deg;--tape-rot:-2deg">
+              <div class="jp-inner">
+                <svg class="cam-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/>
+                  <circle cx="12" cy="13" r="4"/>
+                </svg>
+              </div>
+              <span class="jp-cap">学员互动</span>
+            </div>
+            <div class="j-quote" style="--qrot:-1.5deg;background:#FFF0F5;">
+              <span class="jq-mark">"</span>
+              <p class="jq-text">以后那些假电话，我一眼就能看穿了！</p>
+              <span class="jq-author">— 学员 王叔叔</span>
+            </div>
+          </div>
+          <div class="j-meta">
+            <span class="j-meta-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              14:00 — 16:00
+            </span>
+            <span class="j-meta-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              社区文化活动中心
+            </span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+  <!-- ====================== LECTURES ====================== -->
+  <section id="content" class="lectures diary-page torn-top">
+    <header class="sec-header reveal">
+      <div class="stamp" style="transform:rotate(-5deg)">03</div>
+      <span class="sec-label">LECTURE CONTENT</span>
+      <h2>讲座内容</h2>
+      <p class="sec-sub">课堂笔记整理，四大主题全覆盖</p>
+    </header>
+    <div class="lecture-desk reveal">
+      <article class="lec-card">
+        <span class="lec-num">01</span>
+        <svg class="lec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
+        </svg>
+        <span class="lec-cat">语音交互</span>
+        <h3>语音人机交互</h3>
+        <p class="desc">学习使用手机语音助手，通过对话获取信息、设置提醒。让AI成为生活中的贴心小助手。</p>
+        <ul class="lec-list">
+          <li>语音助手唤醒与使用</li>
+          <li>日常信息查询技巧</li>
+          <li>生活语音提醒设置</li>
+          <li>实践演练环节</li>
         </ul>
-        <button class="hamburger">
-            <i class="fas fa-bars"></i>
-        </button>
-    </nav>
-
-    <!-- 欢迎页 -->
-    <section id="welcome">
-        <!-- 几何背景装饰 -->
-        <div class="geometric-bg">
-            <div class="shape shape-1"></div>
-            <div class="shape shape-2"></div>
-            <div class="shape shape-3"></div>
+      </article>
+      <article class="lec-card">
+        <span class="lec-num">02</span>
+        <svg class="lec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="3" y="3" width="18" height="18" rx="1"/>
+          <circle cx="8.5" cy="8.5" r="1.5"/>
+          <polyline points="21 15 16 10 5 21"/>
+        </svg>
+        <span class="lec-cat">创意生成</span>
+        <h3>图片修复与视频创意</h3>
+        <p class="desc">体验AI修复老照片的神奇，学习用文字描述生成创意图片和视频，让回忆焕发新生。</p>
+        <ul class="lec-list">
+          <li>老照片AI修复技术</li>
+          <li>文字描述生成图片</li>
+          <li>AI视频创意制作</li>
+          <li>作品保存与分享</li>
+        </ul>
+      </article>
+      <article class="lec-card">
+        <span class="lec-num">03</span>
+        <svg class="lec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="12" cy="12" r="10"/>
+          <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+        </svg>
+        <span class="lec-cat">智慧规划</span>
+        <h3>智能旅游与文案生成</h3>
+        <p class="desc">让AI帮您规划完美行程、撰写朋友圈文案，轻松记录生活中的美好时刻。</p>
+        <ul class="lec-list">
+          <li>智能行程规划</li>
+          <li>景点美食推荐</li>
+          <li>朋友圈文案生成</li>
+          <li>个性化定制技巧</li>
+        </ul>
+      </article>
+      <article class="lec-card">
+        <span class="lec-num">04</span>
+        <svg class="lec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          <path d="M12 8v4"/>
+          <path d="M12 16h.01"/>
+        </svg>
+        <span class="lec-cat">安全防护</span>
+        <h3>防AI诈骗教育</h3>
+        <p class="desc">识别AI换脸、语音合成等新型诈骗手段，学会保护个人信息和财产安全，安心享受智能生活。</p>
+        <ul class="lec-list">
+          <li>AI诈骗常见手段</li>
+          <li>语音合成识别技巧</li>
+          <li>个人信息保护</li>
+          <li>真实案例解析</li>
+        </ul>
+        <span class="security-stamp">重点!</span>
+      </article>
+    </div>
+  </section>
+  <!-- ====================== MOMENTS ====================== -->
+  <section id="moments" class="moments diary-page torn-top">
+    <header class="sec-header reveal">
+      <div class="stamp" style="transform:rotate(-15deg)">04</div>
+      <span class="sec-label">HIGHLIGHTS</span>
+      <h2>精彩瞬间</h2>
+      <p class="sec-sub">把照片随手贴在这里，每一张都是回忆</p>
+    </header>
+    <div class="photo-grid reveal">
+      <div class="pol-item">
+        <div class="pi-inner">
+          <svg class="pi-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/>
+            <circle cx="12" cy="13" r="4"/>
+          </svg>
+          <span class="pi-label">活动全景</span>
         </div>
-        
-        <!-- 欢迎页上部分 - 居中大标题 -->
-        <div class="welcome-top">
-            <div class="welcome-content">
-                <h1>AI公益课堂</h1>
-                <div class="welcome-subtitle">为老年人打开智能时代的大门</div>
-                <p>在这个数字化迅速发展的时代，我们致力于帮助老年人融入智能社会。</p>
-                <p>通过简单易懂的方式，帮助老年人了解和使用AI技术，让科技真正惠及每一个人。</p>
-            </div>
+        <span class="pi-cap">全景</span>
+      </div>
+      <div class="pol-item">
+        <div class="pi-inner">
+          <svg class="pi-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/>
+            <circle cx="12" cy="13" r="4"/>
+          </svg>
+          <span class="pi-label">学员互动</span>
         </div>
-        
-        <!-- 欢迎页下部分 - 自动滚动画廊 -->
-        <div class="welcome-gallery">
-            <div class="gallery-container">
-                <!-- 画廊项目将重复两次以实现无缝滚动效果 -->
-                <!-- 第一组画廊项目 -->
-                <div class="gallery-item tilt-effect">
-                    <img src="https://via.placeholder.com/300x200?text=课堂照片1" class="gallery-img" alt="课堂照片1">
-                    <div class="gallery-caption">AI基础知识讲解</div>
-                </div>
-                <div class="gallery-item tilt-effect">
-                    <img src="https://via.placeholder.com/300x200?text=课堂照片2" class="gallery-img" alt="课堂照片2">
-                    <div class="gallery-caption">老年人动手实践</div>
-                </div>
-                <div class="gallery-item tilt-effect">
-                    <img src="https://via.placeholder.com/300x200?text=课堂照片3" class="gallery-img" alt="课堂照片3">
-                    <div class="gallery-caption">智能手机使用技巧</div>
-                </div>
-                <div class="gallery-item tilt-effect">
-                    <img src="https://via.placeholder.com/300x200?text=课堂照片4" class="gallery-img" alt="课堂照片4">
-                    <div class="gallery-caption">社区互动环节</div>
-                </div>
-                <div class="gallery-item tilt-effect">
-                    <img src="https://via.placeholder.com/300x200?text=课堂照片5" class="gallery-img" alt="课堂照片5">
-                    <div class="gallery-caption">问答交流时间</div>
-                </div>
-                
-                <!-- 第二组画廊项目（复制第一组，实现无缝循环） -->
-                <div class="gallery-item tilt-effect">
-                    <img src="https://via.placeholder.com/300x200?text=课堂照片1" class="gallery-img" alt="课堂照片1">
-                    <div class="gallery-caption">AI基础知识讲解</div>
-                </div>
-                <div class="gallery-item tilt-effect">
-                    <img src="https://via.placeholder.com/300x200?text=课堂照片2" class="gallery-img" alt="课堂照片2">
-                    <div class="gallery-caption">老年人动手实践</div>
-                </div>
-                <div class="gallery-item tilt-effect">
-                    <img src="https://via.placeholder.com/300x200?text=课堂照片3" class="gallery-img" alt="课堂照片3">
-                    <div class="gallery-caption">智能手机使用技巧</div>
-                </div>
-                <div class="gallery-item tilt-effect">
-                    <img src="https://via.placeholder.com/300x200?text=课堂照片4" class="gallery-img" alt="课堂照片4">
-                    <div class="gallery-caption">社区互动环节</div>
-                </div>
-                <div class="gallery-item tilt-effect">
-                    <img src="https://via.placeholder.com/300x200?text=课堂照片5" class="gallery-img" alt="课堂照片5">
-                    <div class="gallery-caption">问答交流时间</div>
-                </div>
-            </div>
-            
-            <!-- 向下滚动按钮 - 重叠在画廊上 -->
-            <div class="scroll-down ripple" onclick="document.getElementById('articles').scrollIntoView()">
-                向下滚动探索更多
-                <i class="fas fa-chevron-down"></i>
-            </div>
-            
-            <!-- 滑动提示（仅在移动设备显示） -->
-            <div class="swipe-hint">
-                <i class="fas fa-arrow-left swipe-arrow"></i>
-                滑动查看更多
-                <i class="fas fa-arrow-right swipe-arrow"></i>
-            </div>
-            
-            <!-- 波浪形状底部 -->
-            <div class="wave-bg"></div>
+        <span class="pi-cap">互动</span>
+      </div>
+      <div class="pol-item">
+        <div class="pi-inner">
+          <svg class="pi-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/>
+            <circle cx="12" cy="13" r="4"/>
+          </svg>
+          <span class="pi-label">教学瞬间</span>
         </div>
-    </section>
-
-    <!-- 图文介绍栏目 -->
-    <section id="articles" class="section-reveal">
-        <!-- 纹理背景 -->
-        <div class="texture-bg"></div>
-        
-        <h2 class="section-title">精彩课程内容</h2>
-        <p>面向社区老年人的AI公益讲座已成功举办，以下为活动回顾与精彩瞬间。</p>
-        
-        <div class="course-container">
-            <!-- 左侧课程滚动区域 -->
-            <div class="course-slider hardware-accelerated">
-                <!-- 第一个单元卡片 -->
-                <a href="course-details.html" class="course-card active" style="background-image: url('https://via.placeholder.com/800x450?text=AI基础与应用');">
-                    <div class="course-content">
-                        <h3 class="course-title">AI基础与应用</h3>
-                        <p class="course-description">了解人工智能的基本概念、发展历程及日常应用场景。本单元将以通俗易懂的方式解释AI技术，帮助老年人消除对新技术的恐惧感，认识AI如何改善生活质量。</p>
-                    </div>
-                </a>
-                
-                <!-- 第二个单元卡片 -->
-                <a href="course-details.html" class="course-card" style="background-image: url('https://via.placeholder.com/800x450?text=智能设备使用');">
-                    <div class="course-content">
-                        <h3 class="course-title">智能设备使用</h3>
-                        <p class="course-description">掌握智能手机和智能家居设备的基本操作方法。从语音助手、拍照识别到健康监测应用，本单元将通过实践演示，帮助老年人熟练使用现代智能设备，享受科技便利。</p>
-                    </div>
-                </a>
-                
-                <!-- 滑块导航点 -->
-                <div class="slider-nav">
-                    <span class="slider-dot active" data-index="0"></span>
-                    <span class="slider-dot" data-index="1"></span>
-                </div>
-                
-                <!-- 滑动提示（仅在移动设备显示） -->
-                <div class="swipe-hint">
-                    <i class="fas fa-arrow-left swipe-arrow"></i>
-                    滑动切换课程
-                    <i class="fas fa-arrow-right swipe-arrow"></i>
-                </div>
-            </div>
-            
-            <!-- 右侧操作区域 -->
-            <div class="course-action shadow-gradient fade-in-right">
-                <h3 class="course-more gradient-text">回顾社区AI公益讲座</h3>
-                <p>我们举办了两场AI公益讲座，涵盖基础知识、设备实操与应用案例，帮助老年人快速融入智能生活。点击下方按钮，了解活动详情与完整报道。</p>
-                <a href="course-details.html" class="btn-course-details ripple btn-pulse">查看讲座详情</a>
-            </div>
+        <span class="pi-cap">教学</span>
+      </div>
+      <div class="pol-item">
+        <div class="pi-inner">
+          <svg class="pi-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/>
+            <circle cx="12" cy="13" r="4"/>
+          </svg>
+          <span class="pi-label">小组讨论</span>
         </div>
-    </section>
-
-    <!-- 视频链接栏目 -->
-    <section id="videos" class="section-reveal">
-        <h2 class="section-title">课程视频回放</h2>
-        <p>观看我们的课程视频回放，随时学习，温故知新</p>
-        
-        <div class="video-list">
-            <!-- 第一个视频单元 -->
-            <div class="video-item hover-scale fade-in-left">
-                <div class="video-thumbnail" style="background-image: url('https://via.placeholder.com/300x180?text=视频回放1');">
-                    <div class="video-play-icon">
-                        <i class="fas fa-play"></i>
-                    </div>
-                </div>
-                <div class="video-info">
-                    <div>
-                        <h3 class="video-title">第一单元：AI基础知识讲解</h3>
-                        <p class="video-description">本视频详细介绍了AI的基本概念、类型以及在日常生活中的应用场景。通过简单易懂的示例和生动的演示，帮助老年人理解AI技术的本质和价值。</p>
-                    </div>
-                    <div class="video-meta">
-                        <span><i class="far fa-clock"></i> 课程时长：45分钟</span>
-                        <a href="https://www.bilibili.com" target="_blank" class="video-btn ripple">观看回放</a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- 第二个视频单元 -->
-            <div class="video-item hover-scale fade-in-right">
-                <div class="video-thumbnail" style="background-image: url('https://via.placeholder.com/300x180?text=视频回放2');">
-                    <div class="video-play-icon">
-                        <i class="fas fa-play"></i>
-                    </div>
-                </div>
-                <div class="video-info">
-                    <div>
-                        <h3 class="video-title">第二单元：智能设备实操指南</h3>
-                        <p class="video-description">本视频展示了智能手机和智能家居设备的基本操作方法，包括语音助手使用、拍照识别、地图导航等功能。通过详细的步骤演示，帮助老年人掌握实用技能。</p>
-                    </div>
-                    <div class="video-meta">
-                        <span><i class="far fa-clock"></i> 课程时长：50分钟</span>
-                        <a href="https://www.bilibili.com" target="_blank" class="video-btn ripple">观看回放</a>
-                    </div>
-                </div>
-            </div>
+        <span class="pi-cap">讨论</span>
+      </div>
+      <div class="pol-item">
+        <div class="pi-inner">
+          <svg class="pi-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/>
+            <circle cx="12" cy="13" r="4"/>
+          </svg>
+          <span class="pi-label">结业合影</span>
         </div>
-    </section>
-
-    <!-- 页脚 -->
-    <footer>
-        <p>© 2023 AI公益课堂 - 关爱老年人</p>
-        <p>联系我们：example@email.com</p>
-    </footer>
-
-    <!-- JavaScript脚本 -->
-    <script src="main.js"></script>
+        <span class="pi-cap">合影</span>
+      </div>
+      <div class="gallery-ticket-grid">
+        <div class="gallery-ticket">
+          <div style="font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;opacity:0.5;margin-bottom:4px">ADMIT ONE</div>
+          <div>社区AI讲座</div>
+          <div style="font-size:0.9rem;opacity:0.6">2025.5.10 — 5.17</div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ====================== RESULTS ====================== -->
+  <section id="results" class="results diary-page torn-top">
+    <header class="sec-header reveal">
+      <div class="stamp" style="transform:rotate(-8deg)">05</div>
+      <span class="sec-label">PROJECT RESULTS</span>
+      <h2>项目成果</h2>
+      <p class="sec-sub">满满的收获，温暖的回忆</p>
+    </header>
+    <div class="results-inner">
+      <div class="results-stats-row reveal">
+        <div class="result-stat">
+          <span class="r-num">95%</span>
+          <span class="r-label">满意度</span>
+        </div>
+        <div class="result-stat">
+          <span class="r-num">4.9</span>
+          <span class="r-label">平均评分</span>
+        </div>
+        <div class="result-stat">
+          <span class="r-num">100%</span>
+          <span class="r-label">完成率</span>
+        </div>
+      </div>
+      <div class="results-text reveal reveal-d1">
+        <p>通过两周的深入教学，我们成功帮助社区老年人跨越数字鸿沟，让他们享受AI技术带来的便利。每位参与者都掌握了语音交互、图片处理、旅游规划等实用技能，更学会了识别AI诈骗，保护自身安全。</p>
+        <p>项目获得了社区居民的一致好评，许多学员表示"原来科技可以这么友好"。我们不仅传授了技能，更传递了温暖与信心，让老年人在数字时代也能从容前行。</p>
+        <span class="sticker">圆满完成</span>
+      </div>
+    </div>
+  </section>
+</main>
+<!-- Footer -->
+<footer class="footer">
+  <div class="f-inner">
+    <div class="footer-brand">
+      <span class="f-stamp">AI</span>
+      <div>
+        <span class="f-name">AI在身边</span>
+        <span class="f-tag">让科技温暖生活</span>
+      </div>
+    </div>
+    <div class="footer-meta">
+      <p>大学生社区服务项目 · 结题报告</p>
+      <p>2025 社区智慧生活讲座项目组</p>
+    </div>
+  </div>
+</footer>
+<!-- Back to Top -->
+<button class="back-top" id="backTop" aria-label="返回顶部">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+    <path d="M18 15l-6-6-6 6"/>
+  </svg>
+</button>
+<script>
+(function() {
+  'use strict';
+  const scrollThread = document.getElementById('scrollThread');
+  const sideNav = document.getElementById('sideNav');
+  const scrollHint = document.getElementById('scrollHint');
+  const backTop = document.getElementById('backTop');
+  const sections = document.querySelectorAll('section[id]');
+  const sideLinks = document.querySelectorAll('.side-link');
+  let lastScroll = 0;
+  function onScroll() {
+    const y = window.scrollY;
+    const h = document.documentElement.scrollHeight - window.innerHeight;
+    // Progress bar
+    scrollThread.style.width = (h > 0 ? (y / h) * 100 : 0) + '%';
+    // Side nav visibility — show after scrolling past hero
+    if (sideNav) {
+      sideNav.classList.toggle('hidden-nav', y < 200);
+    }
+    // Scroll hint
+    if (scrollHint) {
+      scrollHint.classList.toggle('hidden', y > 120);
+    }
+    // Active bookmark link
+    let current = '';
+    sections.forEach(sec => {
+      if (y >= sec.offsetTop - 250) current = sec.id;
+    });
+    sideLinks.forEach(link => {
+      link.classList.toggle('active', link.dataset.section === current);
+    });
+    // Back to top
+    backTop.classList.toggle('visible', y > 500);
+    lastScroll = y;
+  }
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(() => { onScroll(); ticking = false; });
+      ticking = true;
+    }
+  });
+  backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  // Hamburger (mobile)
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  if (hamburger && mobileMenu) {
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+      document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+    });
+    mobileMenu.querySelectorAll('.mm-link').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('open');
+        mobileMenu.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    });
+  }
+  // Scroll Reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('revealed');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  // Initial
+  onScroll();
+})();
+</script>
 </body>
-</html> 
+</html>
